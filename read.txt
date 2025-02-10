@@ -1,8 +1,0 @@
-
-**inset-0**   :  fill the parent
-
-**bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900**  : add Gradient
-
-**opacity-80** : Add Opacity
-
-**backdrop-blur-sm** : Applies a small blur effect to the background elements visible through the element.
