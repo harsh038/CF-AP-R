@@ -7,6 +7,7 @@ const DeleteSweetAlert = (text, onConfirm) => {
     color: "white",
     background: "#212f3d",
     icon: "question",
+
     iconColor: "#C0C0C0",
     showCancelButton: true,
     confirmButtonText: "Yes, delete it!",
