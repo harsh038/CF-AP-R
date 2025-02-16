@@ -71,53 +71,14 @@ function CityTable({ updateCityStats }) {
     });
   };
 
-  // const deleteCity = (id) => {
-  //   fetch(`http://localhost:5050/api/City/${id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((res) => {
-  //       if (res.ok) {
-
-  //         return res.json();
-  //       } else {
-  //         toast.error("Internal Server Error");
-  //       }
-  //     })
-  //     .then((data)=>{
-  //         if(data.foreignKey)
-  //         {
-  //             toast.error("City can't be deleted as it is associated with a CollegeTable",
-  //           {
-  //             className:
-  //               " bg-red-950 text-white border  border border-red-400  rounded-xl ",
-  //           }
-  //         );
-  //         }
-  //         else
-  //         {
-  //         toast.success("City Deleted Successfully");
-  //         const updatedCities = cities.filter((c) => c.cityID !== id);
-  //         setCities(updatedCities);
-  //         setFilteredCities(updatedCities);
-
-  //         const total = updatedCities.length;
-  //         const newToday = updatedCities.filter((c) =>
-  //           isToday(c.lastUpdated)
-  //         ).length;
-  //         updateCityStats(total, newToday);
-  //         }
-  //     })
-  //     .catch((error) => console.error("Error deleting city:", error));
-  // };
-
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
+    
     const filtered = cities.filter(
       (c) =>
         c.name.toLowerCase().includes(term) ||
         c.stateModel.name.toLowerCase().includes(term)
-      // c.stateModel.countryModel.name.toLowerCase().includes(term)
     );
     setFilteredCities(filtered);
   };
