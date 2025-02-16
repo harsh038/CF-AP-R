@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Sidebar from "./components/common/Sidebar";
-import OverviewPage from "./pages/OverviewPage";
 import UsersPage from "./pages/users/UsersPage";
 import AddEditUserPage from "./pages/users/AddEditUserPage";
 import SyllabusPage from "./pages/syllabus/SyllabusPage";
@@ -20,6 +19,7 @@ import AddEditCoursePage from "./pages/courses/AddEditCoursesPage";
 import CollegeCoursePage from "./pages/collegeCourses/CollegeCoursePage";
 import CollegeCourseDetailsPage from "./pages/collegeCourses/CollegeCourseDetailsPage";
 import AddEditCollegeCoursePage from "./pages/collegeCourses/AddEditCollegeCoursePage";
+import OverviewPage from "./pages/overview/OverviewPage";
 
 function App() {
   return (
@@ -64,8 +64,6 @@ function App() {
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/addeditcourse" element={<AddEditCoursePage />} />
         <Route path="/addeditcourse/:id" element={<AddEditCoursePage />} />
-
-        
 
         <Route path="/collegecourse" element={<CollegeCoursePage />} />
         <Route

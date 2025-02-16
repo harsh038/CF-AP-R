@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/common/Header";
+import Header from "../../components/common/Header";
 import vectorWhite from "/vectorWhite.svg";
 
 const OverviewPage = () => {
@@ -17,10 +17,10 @@ const OverviewPage = () => {
   return (
     <div className="flex-1 relative z-10 overflow-hidden">
       <div className="relative z-50">
-        <Header title="College Finder Admin Dashboard" />
+        <Header title="Dashboard" />
       </div>
 
-      <main className="h-screen flex justify-center items-center relative bg-[#071c39]">
+      <main className="h-screen flex justify-center items-center relative bg-gray-900">
         <div
           style={{
             width: "150px",
