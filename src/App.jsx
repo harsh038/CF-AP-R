@@ -73,7 +73,11 @@ function App() {
 
         <Route path="/collegecourse" element={<CollegeCoursePage />} />
         <Route
-          path="//addeditcollegecourse/:id"
+          path="/addeditcollegecourse/:id"
+          element={<AddEditCollegeCoursePage />}
+        />
+        <Route
+          path="/addeditcollegecourse"
           element={<AddEditCollegeCoursePage />}
         />
         <Route
