@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
+import vw from "/vectorWhite.svg";
 
 const OverviewPage = () => {
   // State to track cursor position
@@ -42,10 +43,15 @@ const OverviewPage = () => {
         ></div>
 
         {/* Coming Soon Text */}
-        <div className="mb-44">
-          <p>World's No. 1 College Finding Application on your device</p>
-          <div className="absolute font-sans text-3xl font-extrabold text-white z-20">
-            Coming Soon...
+        <div className="">
+          <div className="flex justify-center">
+            <img className="size-36" src={vw} alt="" />
+            <div className="m-5">
+              <h3 className="text-6xl font-extrabold">College Finder</h3>
+              <p className="p-2 font-extralighty text-gray-400">
+                World's No. 1 College Finding Application on the Internet
+              </p>
+            </div>
           </div>
         </div>
       </main>
