@@ -1,40 +1,56 @@
-import { BarChart2, ShoppingBag, Users, Zap } from "lucide-react";
-import { motion } from "framer-motion";
-
+import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
-import StatCard from "../components/common/StatCard";
-import SalesOverviewChart from "../components/overview/SalesOverviewChart";
-import CategoryDistributionChart from "../components/overview/CategoryDistributionChart";
-import SalesChannelChart from "../components/overview/SalesChannelChart";
 
 const OverviewPage = () => {
-	return (
-		<div className='flex-1 overflow-auto relative z-10'>
-			<Header title='College Finder Admin Dashboard' />
+  // State to track cursor position
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-			<main className='max-w-7xl mx-auto py-6 px-4 lg:px-8'>
-				{/* STATS */}
-				<motion.div
-					className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8'
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 1 }}
-				>
-					<StatCard name='Total Sales' icon={Zap} value='$12,345' color='#6366F1' />
-					<StatCard name='New Users' icon={Users} value='1,234' color='#8B5CF6' />
-					<StatCard name='Total Products' icon={ShoppingBag} value='567' color='#EC4899' />
-					<StatCard name='Conversion Rate' icon={BarChart2} value='12.5%' color='#10B981' />
-				</motion.div>
+  useEffect(() => {
+    // Update state on mouse move
+    const handleMouseMove = (e) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
 
-				{/* CHARTS */}
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
-				<div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-					<SalesOverviewChart />
-					<CategoryDistributionChart />
-					<SalesChannelChart />
-				</div>
-			</main>
-		</div>
-	);
+  return (
+    <div className="flex-1 relative z-10 overflow-hidden">
+      {/* Fixed Header */}
+      <div className="relative z-50">
+        <Header title="College Finder Admin Dashboard" />
+      </div>
+
+      <main className="h-screen flex justify-center items-center relative bg-[#071c39]">
+        {/* Animated Gradient following Cursor (Behind All Elements) */}
+        <div
+          style={{
+            width: "150px", // Smaller Size
+            height: "150px",
+            filter: "blur(50px)",
+            backgroundImage:
+              "linear-gradient(hsl(222, 84%, 60%), hsl(164, 79%, 71%))",
+            borderRadius: "50%", // Smooth rounded shape
+            position: "absolute",
+            left: position.x - 75 + "px", // Adjust to center on cursor
+            top: position.y - 75 + "px",
+            transition: "transform 0.1s ease-out", // Smooth follow effect
+            pointerEvents: "none", // Avoid blocking clicks
+            zIndex: 0, // Keep it behind everything
+          }}
+        ></div>
+
+        {/* Coming Soon Text */}
+        <div className="mb-44">
+          <p>World's No. 1 College Finding Application on your device</p>
+          <div className="absolute font-sans text-3xl font-extrabold text-white z-20">
+            Coming Soon...
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 };
+
 export default OverviewPage;

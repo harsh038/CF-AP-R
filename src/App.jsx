@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Sidebar from "./components/common/Sidebar";
-
 import OverviewPage from "./pages/OverviewPage";
 import UsersPage from "./pages/users/UsersPage";
 import AnalyticsPage from "./pages/AnalyticsPage";

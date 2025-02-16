@@ -42,7 +42,6 @@ const AddEditSyllabusPage = () => {
     }
   }, [id]);
 
-  // Fetch course dropdown data
   useEffect(() => {
     fetchData("http://localhost:5050/api/Course/CourseDropDown").then(
       (data) => {
