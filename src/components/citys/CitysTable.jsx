@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import DeleteSweetAlert from "../common/DeleteSweetAlert";
-import DeleteSweetAlert from "../common/DeleteSweetAlert";
 
 const isToday = (date) => {
   const checkDate = new Date(date);
