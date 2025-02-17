@@ -1,87 +1,76 @@
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import DeleteSweetAlert from "../common/DeleteSweetAlert";
 
 const isToday = (date) => {
-  const today = new Date();
   const checkDate = new Date(date);
-  return (
-    today.getDate() === checkDate.getDate() &&
-    today.getMonth() === checkDate.getMonth() &&
-    today.getFullYear() === checkDate.getFullYear()
-  );
+  const today = new Date();
+  return today.toDateString() === checkDate.toDateString();
 };
 
 function CityTable({ updateCityStats }) {
   const [cities, setCities] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCities, setFilteredCities] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5050/api/City")
       .then((res) => res.json())
       .then((data) => {
         setCities(data);
-        setFilteredCities(data);
-        const totalCount = data.length;
-        const newAddedToday = data.filter((c) => isToday(c.lastUpdated)).length;
-        updateCityStats(totalCount, newAddedToday);
+        updateCityStats(
+          data.length,
+          data.filter((c) => isToday(c.lastUpdated)).length
+        );
       })
       .catch((error) => console.error("Error fetching cities:", error));
-  }, []);
+  }, [updateCityStats]);
 
-  const deleteCity = (id) => {
-    DeleteSweetAlert("You won't be able to revert the City!", () => {
-      fetch(`http://localhost:5050/api/City/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            toast.error("Internal Server Error");
-          }
-        })
-        .then((data) => {
+  const deleteCity = useCallback(
+    (id) => {
+      DeleteSweetAlert("You won't be able to revert the City!", async () => {
+        try {
+          const res = await fetch(`http://localhost:5050/api/City/${id}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error("Internal Server Error");
+
+          const data = await res.json();
           if (data.foreignKey) {
             toast.error(
               "City can't be deleted as it is associated with a CollegeTable",
               {
                 className:
-                  " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+                  "bg-red-950 text-white border border-red-400 rounded-xl",
               }
             );
-          } else {
-            toast.success("City Deleted Successfully");
-            const updatedCities = cities.filter((c) => c.cityID !== id);
-            setCities(updatedCities);
-            setFilteredCities(updatedCities);
-
-            const total = updatedCities.length;
-            const newToday = updatedCities.filter((c) =>
-              isToday(c.lastUpdated)
-            ).length;
-            updateCityStats(total, newToday);
+            return;
           }
-        })
-        .catch((error) => console.error("Error deleting city:", error));
-    });
-  };
 
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    
-    const filtered = cities.filter(
-      (c) =>
-        c.name.toLowerCase().includes(term) ||
-        c.stateModel.name.toLowerCase().includes(term)
-    );
-    setFilteredCities(filtered);
-  };
+          toast.success("City Deleted Successfully");
+          setCities((prevCities) => {
+            const updatedCities = prevCities.filter((c) => c.cityID !== id);
+            updateCityStats(
+              updatedCities.length,
+              updatedCities.filter((c) => isToday(c.lastUpdated)).length
+            );
+            return updatedCities;
+          });
+        } catch (error) {
+          console.error("Error deleting city:", error);
+        }
+      });
+    },
+    [updateCityStats]
+  );
+
+  const filteredCities = cities.filter(
+    (c) =>
+      c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.stateModel.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <motion.div
@@ -97,7 +86,7 @@ function CityTable({ updateCityStats }) {
             type="text"
             placeholder="Search cities"
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 px-40 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            onChange={handleSearch}
+            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           />
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
@@ -108,7 +97,6 @@ function CityTable({ updateCityStats }) {
           </button>
         </Link>
       </div>
-
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-700">
           <thead>
@@ -150,7 +138,6 @@ function CityTable({ updateCityStats }) {
                       <Edit size={18} />
                     </button>
                   </Link>
-                  {"  "}
                   <button
                     className="text-red-400 hover:text-red-300"
                     onClick={() => deleteCity(city.cityID)}

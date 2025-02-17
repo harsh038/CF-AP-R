@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { Edit, Eye, Search, Trash2, User, View } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 
 function CollegesTable() {
   const [colleges, setColleges] = useState([]);

@@ -1,73 +1,70 @@
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "react-hot-toast";
 import DeleteSweetAlert from "../common/DeleteSweetAlert";
 
 function CountryTable() {
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCountries, setFilteredCountries] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5050/api/Country")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch("http://localhost:5050/api/Country");
+        const data = await res.json();
         setCountries(data);
-        setFilteredCountries(data);
-      })
-      .catch((error) => console.error("Error fetching countries:", error));
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+    fetchCountries();
   }, []);
 
-  const deleteCountry = (id) => {
-    DeleteSweetAlert("You won't be able to revert the country!", () => {
-      fetch(`http://localhost:5050/api/Country/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            toast.error(
-              "Please delete all dependent rows in the State table first"
-            );
-          }
-        })
-        .then((data) => {
-          if (data.foreignKey) {
-            toast.error(
-              "Country can't be deleted as it is associated with a State",
-              {
-                className:
-                  "bg-red-950 text-white border border-red-400 rounded-xl",
-              }
-            );
-          } else {
-            toast.success("Country Deleted Successfully", {
-              className:
-                "bg-green-950 text-white border border-green-400 rounded-xl",
-            });
-            const updatedCountry = countries.filter((c) => c.countryID !== id);
-            setCountries(updatedCountry);
-            setFilteredCountries(updatedCountry);
-          }
-        })
-        .catch((error) => {
-          console.error("Error deleting Country:", error);
-          toast.error("Error deleting country. Please check the server.");
+  const handleDelete = async (id) => {
+    DeleteSweetAlert("You won't be able to revert this!", async () => {
+      try {
+        const res = await fetch(`http://localhost:5050/api/Country/${id}`, {
+          method: "DELETE",
         });
+
+        if (!res.ok) {
+          toast.error(
+            "Please delete all dependent rows in the State table first."
+          );
+          return;
+        }
+
+        const data = await res.json();
+        if (data.foreignKey) {
+          toast.error(
+            "Country can't be deleted as it is associated with a State",
+            {
+              className:
+                "bg-red-950 text-white border border-red-400 rounded-xl",
+            }
+          );
+        } else {
+          toast.success("Country Deleted Successfully", {
+            className:
+              "bg-green-950 text-white border border-green-400 rounded-xl",
+          });
+          setCountries((prev) => prev.filter((c) => c.countryID !== id));
+        }
+      } catch (error) {
+        console.error("Error deleting country:", error);
+        toast.error("Error deleting country. Please check the server.");
+      }
     });
   };
 
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filtered = countries.filter((c) =>
-      c.name.toLowerCase().includes(term)
-    );
-    setFilteredCountries(filtered);
-  };
+  const filteredCountries = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return term
+      ? countries.filter((c) => c.name.toLowerCase().includes(term))
+      : countries;
+  }, [countries, searchTerm]);
 
   return (
     <motion.div
@@ -83,7 +80,7 @@ function CountryTable() {
             type="text"
             placeholder="Search countries"
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 px-40 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            onChange={handleSearch}
+            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           />
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
@@ -132,7 +129,7 @@ function CountryTable() {
                   </Link>
                   <button
                     className="text-red-400 hover:text-red-300"
-                    onClick={() => deleteCountry(country.countryID)}
+                    onClick={() => handleDelete(country.countryID)}
                   >
                     <Trash2 size={18} />
                   </button>
