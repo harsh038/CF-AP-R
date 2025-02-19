@@ -18,7 +18,7 @@ const BranchDetailsPage = () => {
       .catch((error) => console.error("Error fetching Branch:", error));
   }, [id]);
 
-  const deleteBranches = (id) => {
+  const deleteBranches = () => {
     DeleteSweetAlert("You won't be able to revert the Branches!", () => {
       fetch(`http://localhost:5050/api/Branch/${id}`, { method: "DELETE" })
         .then((res) => {
@@ -27,38 +27,15 @@ const BranchDetailsPage = () => {
               className:
                 "bg-green-950 text-white border border-green-400 rounded-xl",
             });
+            navigate("/branches");
           } else {
             toast.error("Internal Server Error");
+            navigate("/branches");
           }
-          navigate('/branches')
         })
         .catch((error) => console.error("Error deleting Branches:", error));
     });
   };
-
-  // const deleteBranch = () => {
-  //   DeleteSweetAlert("You won't be able to revert the Branch!", () => {
-  //     fetch(`http://localhost:5050/api/Branch/${id}`, {
-  //       method: "DELETE",
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data.foreignKey) {
-  //           toast.error(
-  //             "Delete dependent rows from BranchCourse or Reviews table first"
-  //           );
-  //           navigate("/branches");
-  //         } else {
-  //           toast.success("Branch deleted successfully");
-  //           navigate("/branches");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         toast.error("Error deleting Branch");
-  //         console.error("Error deleting Branch:", error);
-  //       });
-  //   });
-  // };
   return (
     <>
       <div className="flex-1 overflow-auto relative z-10 bg-gray-900">
@@ -76,36 +53,17 @@ const BranchDetailsPage = () => {
                   {branch.branchName}
                 </h2>
 
-                {/* Branch Details Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-300">
                   <div className="space-y-2">
                     <p className="font-semibold">Course Name:</p>
-                    <p className="text-sm">{branch.courseModel?.name || "N/A"}</p>
+                    <p className="text-sm">
+                      {branch.courseModel?.name || "N/A"}
+                    </p>
                   </div>
                   <div className="space-y-2">
-                    <p className="font-semibold">Type:</p>
-                    <p className="text-sm">{branch.type}</p>
+                    <p className="font-semibold">Content:</p>
+                    <p className="text-sm">{branch.content}</p>
                   </div>
-                  <div className="space-y-2">
-                    <p className="font-semibold">Rating:</p>
-                    <p className="text-sm">{branch.rating}</p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="font-semibold">Website:</p>
-                    <a
-                      href={branch.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline text-sm"
-                    >
-                      {branch.website}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="space-y-2 mt-4">
-                  <p className="font-semibold text-gray-300">Description:</p>
-                  <p className="text-sm text-gray-400">{branch.description}</p>
                 </div>
 
                 {/* Actions */}

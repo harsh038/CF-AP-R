@@ -22,6 +22,7 @@ import AddEditCollegeCoursePage from "./pages/collegeCourses/AddEditCollegeCours
 import OverviewPage from "./pages/overview/OverviewPage";
 import BranchesPage from "./pages/branches/BranchesPage";
 import BranchDetailsPage from "./pages/branches/BranchDetailsPage";
+import AddEditBranchPage from "./pages/branches/AddEditBranchPage";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
 
         <Route path="/branches" element={<BranchesPage />} />
         <Route path="/viewbranchdetail/:id" element={<BranchDetailsPage />} />
+        <Route path="/addeditbranch/:id" element={<AddEditBranchPage />} />
+        <Route path="/addeditbranch" element={<AddEditBranchPage />} />
 
         <Route path="/addeditsyllabus" element={<AddEditSyllabusPage />} />
         <Route path="/addeditsyllabus/:id" element={<AddEditSyllabusPage />} />

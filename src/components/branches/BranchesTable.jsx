@@ -18,8 +18,6 @@ function BranchesTable() {
       .catch((error) => console.error("Error fetching Branches:", error));
   }, []);
 
-
-
   const filteredBranches = useMemo(
     () =>
       Branches.filter(
@@ -56,8 +54,7 @@ function BranchesTable() {
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
         </div>
 
-        {/* Add Branch Button */}
-        <Link to={`/addeditBranches`} className="w-full sm:w-auto">
+        <Link to={`/addeditbranch`} className="w-full sm:w-auto">
           <button className="w-full sm:w-auto text-white px-4 py-2 rounded-lg bg-blue-800 border hover:border-blue-500 border-blue-800">
             Add Branches
           </button>
