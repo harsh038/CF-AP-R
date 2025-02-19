@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { Eye, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
-import { toast } from "react-hot-toast";
-import DeleteSweetAlert from "../common/DeleteSweetAlert";
 
 function BranchesTable() {
   const [Branches, setBranches] = useState([]);
@@ -24,6 +22,7 @@ function BranchesTable() {
         (s) =>
           s.branchName.toLowerCase().includes(searchTerm) ||
           s.courseModel.name.toLowerCase().includes(searchTerm) ||
+          s.about.toLowerCase().includes(searchTerm) ||
           s.content.toLowerCase().includes(searchTerm)
       ),
     [Branches, searchTerm]
@@ -65,16 +64,14 @@ function BranchesTable() {
         <table className="min-w-full divide-y divide-gray-700">
           <thead>
             <tr>
-              {["No.", "name", "Course Name", "Content", "Actions"].map(
-                (header) => (
-                  <th
-                    key={header}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                  >
-                    {header}
-                  </th>
-                )
-              )}
+              {["No.", "name", "Course Name", "Actions"].map((header) => (
+                <th
+                  key={header}
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
@@ -94,9 +91,7 @@ function BranchesTable() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   {s.courseModel.name}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {s.content}
-                </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   <Link to={`/viewbranchdetail/${s.branchID}`}>
                     <button className="text-indigo-400 hover:text-indigo-300 mr-2">
@@ -104,19 +99,6 @@ function BranchesTable() {
                     </button>
                   </Link>
                 </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  <Link to={`/addeditBranches/${s.branchID}`}>
-                    <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                      <Edit size={18} />
-                    </button>
-                  </Link>
-                  <button
-                    className="text-red-400 hover:text-red-300"
-                    onClick={() => deleteBranches(s.branchID)}
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </td> */}
               </motion.tr>
             ))}
           </tbody>

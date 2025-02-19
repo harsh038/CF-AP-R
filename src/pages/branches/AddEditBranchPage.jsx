@@ -15,6 +15,7 @@ const AddEditBranchPage = () => {
     courseID: "",
     branchName: "",
     content: "",
+    about: "",
   });
 
   const fetchData = async (url) => {
@@ -35,6 +36,7 @@ const AddEditBranchPage = () => {
           courseID: data.courseID,
           branchName: data.branchName,
           content: data.content,
+          about: data.about,
         });
       });
     }
@@ -57,6 +59,7 @@ const AddEditBranchPage = () => {
     courseID: Yup.string().required("Course is required"),
     branchName: Yup.string().required("Branch name is required"),
     content: Yup.string().required("Content is required"),
+    about: Yup.string().required("About is required"),
   });
 
   const handleSubmit = async (e) => {
@@ -152,6 +155,22 @@ const AddEditBranchPage = () => {
                   <span className="text-red-600 text-sm">
                     {errors.courseID}
                   </span>
+                )}
+              </label>
+              <label className="flex flex-col gap-2">
+                About :
+                <input
+                  type="text"
+                  className="
+                    bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400
+                    "
+                  placeholder="Enter About"
+                  name="about"
+                  value={formData.about}
+                  onChange={handleInputChange}
+                />
+                {errors.about && (
+                  <span className="text-red-600 text-sm">{errors.about}</span>
                 )}
               </label>
               <label className="flex flex-col gap-2">

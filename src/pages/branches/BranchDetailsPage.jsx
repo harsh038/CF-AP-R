@@ -61,6 +61,10 @@ const BranchDetailsPage = () => {
                     </p>
                   </div>
                   <div className="space-y-2">
+                    <p className="font-semibold">About :</p>
+                    <p className="text-sm">{branch.about}</p>
+                  </div>
+                  <div className="space-y-2">
                     <p className="font-semibold">Content:</p>
                     <p className="text-sm">{branch.content}</p>
                   </div>
