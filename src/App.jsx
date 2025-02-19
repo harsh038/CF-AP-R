@@ -20,6 +20,8 @@ import CollegeCoursePage from "./pages/collegeCourses/CollegeCoursePage";
 import CollegeCourseDetailsPage from "./pages/collegeCourses/CollegeCourseDetailsPage";
 import AddEditCollegeCoursePage from "./pages/collegeCourses/AddEditCollegeCoursePage";
 import OverviewPage from "./pages/overview/OverviewPage";
+import BranchesPage from "./pages/branches/BranchesPage";
+import BranchDetailsPage from "./pages/branches/BranchDetailsPage";
 
 function App() {
   return (
@@ -39,7 +41,9 @@ function App() {
         <Route path="/addedituser" element={<AddEditUserPage />} />
         <Route path="/addedituser/:id" element={<AddEditUserPage />} />
 
-        <Route path="/syllabus" element={<SyllabusPage />} />
+        <Route path="/branches" element={<BranchesPage />} />
+        <Route path="/viewbranchdetail/:id" element={<BranchDetailsPage />} />
+
         <Route path="/addeditsyllabus" element={<AddEditSyllabusPage />} />
         <Route path="/addeditsyllabus/:id" element={<AddEditSyllabusPage />} />
 

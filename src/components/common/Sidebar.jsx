@@ -26,6 +26,7 @@ const SIDEBAR_ITEMS = [
   { name: "Colleges", icon: School, color: "#EC4899", href: "/colleges" },
   { name: "Courses", icon: FolderOpenDot, color: "#10B981", href: "/courses" },
   { name: "Syllabus", icon: Layers, color: "#F59E0B", href: "/syllabus" },
+  { name: "Branches", icon: Layers, color: "#F59E0B", href: "/branches" },
   { name: "Country", icon: Earth, color: "#2B8AF6", href: "/country" },
   { name: "State", icon: GitGraphIcon, color: "#D447FF", href: "/state" },
   { name: "City", icon: MapPin, color: "#00BFF6", href: "/city" },
