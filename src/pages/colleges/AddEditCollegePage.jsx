@@ -20,7 +20,8 @@ const AddEditCollegePage = () => {
     cityID: "",
     name: "",
     type: "Private",
-    rating: "",
+    establishmentYear: "",
+    address: "",
     website: "",
     description: "",
   });
@@ -36,60 +37,63 @@ const AddEditCollegePage = () => {
     }
   };
 
-  // Fetch country dropdown data
   useEffect(() => {
     fetchData("http://localhost:5050/api/Country/CountryDropDown").then(
       (data) => setCountryDD(data)
     );
 
-    // Fetch all cities for validation
-    fetchData("http://localhost:5050/api/City").then((data) => setAllCities(data));
+    fetchData("http://localhost:5050/api/City").then((data) =>
+      setAllCities(data)
+    );
   }, []);
 
-  // Load state dropdown based on country selection
   function LoadStateDD(countryID) {
     if (countryID > 0) {
-      fetchData(`http://localhost:5050/api/State/StateDropDown/${countryID}`).then((data) => {
+      fetchData(
+        `http://localhost:5050/api/State/StateDropDown/${countryID}`
+      ).then((data) => {
         setStateDD(data);
       });
     } else {
-      setStateDD([]); // Clear state dropdown
+      setStateDD([]);
     }
   }
 
-  // Fetch city data for editing
   useEffect(() => {
     if (id) {
-      fetchData(`http://localhost:5050/api/College/${id}`).then((collegeData) => {
-        
+      fetchData(`http://localhost:5050/api/College/${id}`).then(
+        (collegeData) => {
+          setFormData({
+            cityID: collegeData.cityID,
+            name: collegeData.name,
+            type: collegeData.type,
+            rating: collegeData.rating,
+            website: collegeData.website,
+            description: collegeData.description,
+            establishmentYear: collegeData.establishmentYear,
+            address: collegeData.address,
+            collegeID: collegeData.collegeID,
+            countryID: collegeData.countryID,
+            stateID: collegeData.stateID,
+          });
 
-        setFormData({
-          cityID: collegeData.cityID,
-          name: collegeData.name,
-          type: collegeData.type,
-          rating: collegeData.rating,
-          website: collegeData.website,
-          description: collegeData.description,
-          collegeID: collegeData.collegeID,
-          countryID: collegeData.countryID,
-          stateID: collegeData.stateID,
-        });
-
-        
-        LoadStateDD(collegeData.countryID);
-        if (collegeData.stateID) {
-          LoadCityDD(collegeData.stateID);
+          LoadStateDD(collegeData.countryID);
+          if (collegeData.stateID) {
+            LoadCityDD(collegeData.stateID);
+          }
         }
-      });
+      );
     }
   }, [id]);
 
   // Load city dropdown based on state selection
   function LoadCityDD(stateID) {
     if (stateID > 0) {
-      fetchData(`http://localhost:5050/api/City/CityDropDown/${stateID}`).then((data) => {
-        setAllCities(data);
-      });
+      fetchData(`http://localhost:5050/api/City/CityDropDown/${stateID}`).then(
+        (data) => {
+          setAllCities(data);
+        }
+      );
     } else {
       setAllCities([]); // Clear city dropdown
     }
@@ -108,18 +112,31 @@ const AddEditCollegePage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Validation schema for Yup
   const validationSchema = Yup.object({
     countryID: Yup.string().required("Country is required"),
     stateID: Yup.string().required("State is required"),
     cityID: Yup.string().required("City is required"),
+
     name: Yup.string()
       .required("College name is required")
       .max(100, "College name must be less than 100 characters"),
+
     type: Yup.string().required("College type is required"),
-    rating: Yup.number().required("Rating is required").min(0).max(5),
-    website: Yup.string().url("Invalid URL").required("Website is required"),
-    description: Yup.string().required("Description is required"),
+
+    establishmentYear: Yup.number()
+      .typeError("Establishment year must be a number")
+      .integer("Year must be a whole number")
+      .min(1800, "Establishment year must be after 1800")
+      .max(new Date().getFullYear(), `Year cannot be in the future`)
+      .required("Establishment year is required"),
+
+    website: Yup.string()
+      .url("Invalid URL format")
+      .required("Website is required"),
+
+    description: Yup.string()
+      .required("Description is required")
+      .max(1000, "Description must be less than 1000 characters"),
   });
 
   // Form submit handler
@@ -149,7 +166,9 @@ const AddEditCollegePage = () => {
     })
       .then((res) => res.json())
       .then(() => {
-        toast.success(id ? "College updated successfully." : "College added successfully.");
+        toast.success(
+          id ? "College updated successfully." : "College added successfully."
+        );
         navigate("/colleges");
       })
       .catch((error) => {
@@ -180,7 +199,9 @@ const AddEditCollegePage = () => {
                 placeholder="Enter college name"
                 className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
-              {errors.name && <p className="text-red-600 text-sm">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-600 text-sm">{errors.name}</p>
+              )}
             </label>
 
             <label className="flex flex-col gap-2">
@@ -197,16 +218,20 @@ const AddEditCollegePage = () => {
             </label>
 
             <label className="flex flex-col gap-2">
-              <span className="text-white">Rating:</span>
+              <span className="text-white">Establishment Year</span>
               <input
                 type="number"
-                name="rating"
-                value={formData.rating}
+                name="establishmentYear"
+                value={formData.establishmentYear}
                 onChange={handleInputChange}
-                placeholder="Enter rating"
+                placeholder="Enter Establishment Year"
                 className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
-              {errors.rating && <p className="text-red-600 text-sm">{errors.rating}</p>}
+              {errors.establishmentYear && (
+                <p className="text-red-600 text-sm">
+                  {errors.establishmentYear}
+                </p>
+              )}
             </label>
 
             <label className="flex flex-col gap-2">
@@ -219,19 +244,36 @@ const AddEditCollegePage = () => {
                 placeholder="Enter website"
                 className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
-              {errors.website && <p className="text-red-600 text-sm">{errors.website}</p>}
+              {errors.website && (
+                <p className="text-red-600 text-sm">{errors.website}</p>
+              )}
             </label>
-
+            <label className="flex flex-col gap-2">
+              <span className="text-white">Address :</span>
+              <textarea
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Enter Address "
+                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              />
+              {errors.address && (
+                <p className="text-red-600 text-sm">{errors.address}</p>
+              )}
+            </label>
             <label className="flex flex-col gap-2">
               <span className="text-white">Description:</span>
-              <textarea
+              <input
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
                 placeholder="Enter description"
                 className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               />
-              {errors.description && <p className="text-red-600 text-sm">{errors.description}</p>}
+              {errors.description && (
+                <p className="text-red-600 text-sm">{errors.description}</p>
+              )}
             </label>
 
             {/* Country, State, City Dropdowns */}
@@ -245,12 +287,14 @@ const AddEditCollegePage = () => {
               >
                 <option value="">Select Country</option>
                 {countryDD.map((country) => (
-                  <option key={country.countryID} value={ country.countryID }>
+                  <option key={country.countryID} value={country.countryID}>
                     {country.name}
                   </option>
                 ))}
               </select>
-              {errors.countryID && <p className="text-red-600 text-sm">{errors.countryID}</p>}
+              {errors.countryID && (
+                <p className="text-red-600 text-sm">{errors.countryID}</p>
+              )}
             </label>
 
             <label className="flex flex-col gap-2">
@@ -269,7 +313,9 @@ const AddEditCollegePage = () => {
                   </option>
                 ))}
               </select>
-              {errors.stateID && <p className="text-red-600 text-sm">{errors.stateID}</p>}
+              {errors.stateID && (
+                <p className="text-red-600 text-sm">{errors.stateID}</p>
+              )}
             </label>
 
             <label className="flex flex-col gap-2">
@@ -288,7 +334,9 @@ const AddEditCollegePage = () => {
                   </option>
                 ))}
               </select>
-              {errors.cityID && <p className="text-red-600 text-sm">{errors.cityID}</p>}
+              {errors.cityID && (
+                <p className="text-red-600 text-sm">{errors.cityID}</p>
+              )}
             </label>
 
             <button

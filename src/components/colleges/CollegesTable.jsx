@@ -26,7 +26,8 @@ function CollegesTable() {
         c.name.toLowerCase().includes(term) ||
         c.cityModel.name.toLowerCase().includes(term) ||
         c.type.toLowerCase().includes(term) ||
-        c.rating.toString().includes(term)
+        c.address.toLowerCase().includes(term) ||
+        c.establishmentYear.toString().includes(term)
     );
     setFilteredColleges(filtered);
   };
@@ -75,7 +76,7 @@ function CollegesTable() {
                 Type
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Rating
+                Establishment
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 View
@@ -107,7 +108,7 @@ function CollegesTable() {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {college.rating}
+                  {college.establishmentYear}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   <Link to={`/collegedetails/${college.collegeID}`}>

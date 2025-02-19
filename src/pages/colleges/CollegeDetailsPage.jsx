@@ -71,8 +71,12 @@ const CollegeDetailsPage = () => {
                     <p className="text-sm">{college.type}</p>
                   </div>
                   <div className="space-y-2">
-                    <p className="font-semibold">Rating:</p>
-                    <p className="text-sm">{college.rating}</p>
+                    <p className="font-semibold">Establishment Year:</p>
+                    <p className="text-sm">{college.establishmentYear}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-semibold">Address :</p>
+                    <p className="text-sm">{college.address}</p>
                   </div>
                   <div className="space-y-2">
                     <p className="font-semibold">Website:</p>
