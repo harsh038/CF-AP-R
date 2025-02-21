@@ -3,7 +3,6 @@ import { Toaster } from "react-hot-toast";
 import Sidebar from "./components/common/Sidebar";
 import UsersPage from "./pages/users/UsersPage";
 import AddEditUserPage from "./pages/users/AddEditUserPage";
-import AddEditSyllabusPage from "./pages/syllabus/AddEditSyllabusPage";
 import CollegesPage from "./pages/colleges/CollegesPage";
 import AddEditCollegePage from "./pages/colleges/AddEditCollegePage";
 import CountryPage from "./pages/countrys/CountryPage";
@@ -45,9 +44,6 @@ function App() {
         <Route path="/viewbranchdetail/:id" element={<BranchDetailsPage />} />
         <Route path="/addeditbranch/:id" element={<AddEditBranchPage />} />
         <Route path="/addeditbranch" element={<AddEditBranchPage />} />
-
-        <Route path="/addeditsyllabus" element={<AddEditSyllabusPage />} />
-        <Route path="/addeditsyllabus/:id" element={<AddEditSyllabusPage />} />
 
         <Route path="/colleges" element={<CollegesPage />} />
         <Route path="/collegedetails/:id" element={<CollegeDetailsPage />} />
