@@ -3,7 +3,6 @@ import { Toaster } from "react-hot-toast";
 import Sidebar from "./components/common/Sidebar";
 import UsersPage from "./pages/users/UsersPage";
 import AddEditUserPage from "./pages/users/AddEditUserPage";
-import SyllabusPage from "./pages/syllabus/SyllabusPage";
 import AddEditSyllabusPage from "./pages/syllabus/AddEditSyllabusPage";
 import CollegesPage from "./pages/colleges/CollegesPage";
 import AddEditCollegePage from "./pages/colleges/AddEditCollegePage";
