@@ -170,8 +170,12 @@ const CollegeCourseDetailsPage = () => {
                     {course.courseModel?.name || "Course Name"}
                   </h2>
                   <p className="text-sm text-gray-400 mb-2">
+                    <strong>Branch Name: </strong> {course.branchModel.branchName}
+                  </p>
+                  <p className="text-sm text-gray-400 mb-2">
                     <strong>Seats Available:</strong> {course.seatAvailable}
                   </p>
+                  
                   <p className="text-sm text-gray-400 mb-4">
                     <strong>Fee:</strong> ₹{course.fee}
                   </p>

@@ -12,9 +12,11 @@ const AddEditCollegeCoursePage = () => {
   const [errors, setErrors] = useState({});
   const [collegeDD, setCollegeDD] = useState([]);
   const [courseDD, setCourseDD] = useState([]);
+  const [branchDD, setBranchDD] = useState([]);
   const [formData, setFormData] = useState({
     collegeID: "",
     courseID: "",
+    branchID: "",
     fee: "",
     seatAvailable: "",
     admissionCriteria: "",
@@ -43,21 +45,42 @@ const AddEditCollegeCoursePage = () => {
             collegeName: data.collegeModel.name,
             courseID: data.courseID,
             courseName: data.courseModel.name,
+            branchID: data.branchID,
+            branchName: data.branchModel.branchName,
             fee: data.fee,
             seatAvailable: data.seatAvailable,
             admissionCriteria: data.admissionCriteria,
           });
+          LoadBranchDD(data.courseID);
         });
     }
   }, [id]);
 
   useEffect(() => {
-    fetchData("http://localhost:5050/api/Course/CourseDropDown").then(
-      (data) => {
+    const fetchCourses = async () => {
+      try {
+        const data = await fetchData(
+          "http://localhost:5050/api/Course/CourseDropDown"
+        );
         setCourseDD(data);
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
       }
-    );
+    };
+    fetchCourses();
   }, []);
+
+  function LoadBranchDD(courseID) {
+    if (courseID > 0) {
+      fetchData(
+        `http://localhost:5050/api/Branch/branchDropDown/${courseID}`
+      ).then((data) => {
+        setBranchDD(data);
+      });
+    } else {
+      setBranchDD([]);
+    }
+  }
 
   useEffect(() => {
     fetchData("http://localhost:5050/api/College/OnlyCollegeDropDown").then(
@@ -67,6 +90,9 @@ const AddEditCollegeCoursePage = () => {
     );
   }, []);
   const handleInputChange = (e) => {
+    if (e.target.name === "courseID") {
+      LoadBranchDD(e.target.value);
+    }
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -74,7 +100,8 @@ const AddEditCollegeCoursePage = () => {
   const validationSchema = Yup.object({
     collegeID: Yup.string().required("College ID is required"),
     courseID: Yup.string().required("Course ID is required"),
-    fee: Yup.string().required(),
+    branchID: Yup.string().required("Branch ID is required"),
+    fee: Yup.string().required("Fee is required"),
     seatAvailable: Yup.number("Seat Available must be a number").required(
       "Seat Available is required"
     ),
@@ -107,16 +134,26 @@ const AddEditCollegeCoursePage = () => {
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
-      .then(() => {
-        toast.success(
-          id
-            ? "College's Course updated successfully."
-            : "Courese of college added successfully.",
-          {
-            className:
-              " bg-green-950 text-white border  border border-green-400  rounded-xl ",
-          }
-        );
+      .then((data) => {
+        if (data.duplication) {
+          toast.error(
+            "Branch is already exist in that course of college",
+            {
+              className:
+                " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+            }
+          );
+        } else {
+          toast.success(
+            id
+              ? "College's Course updated successfully."
+              : "Courese of college added successfully.",
+            {
+              className:
+                " bg-green-950 text-white border  border border-green-400  rounded-xl ",
+            }
+          );
+        }
         navigate(-1);
       })
       .catch((error) => {
@@ -182,6 +219,28 @@ const AddEditCollegeCoursePage = () => {
                 {errors.courseID && (
                   <span className="text-red-600 text-sm">
                     {errors.courseID}
+                  </span>
+                )}
+              </label>
+              <label className="flex flex-col gap-2">
+                Branch Name:
+                <select
+                  className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  name="branchID"
+                  value={formData.branchID}
+                  onChange={handleInputChange}
+                  disabled={!formData.courseID}
+                >
+                  <option value="">Select Branch</option>
+                  {branchDD.map((branch) => (
+                    <option key={branch.branchID} value={branch.branchID}>
+                      {branch.branchName}
+                    </option>
+                  ))}
+                </select>
+                {errors.branchID && (
+                  <span className="text-red-600 text-sm">
+                    {errors.branchID}
                   </span>
                 )}
               </label>
