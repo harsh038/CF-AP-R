@@ -87,14 +87,21 @@ const AddEditBranchPage = () => {
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
-      .then(() => {
-        toast.success(
-          id ? "Branch updated successfully." : "Branch added successfully.",
-          {
+      .then((data) => {
+        if (data.duplication) {
+          toast.error("Branch is already associatred with course ", {
             className:
-              " bg-green-950 text-white border  border border-green-400  rounded-xl ",
-          }
-        );
+              " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+          });
+        } else {
+          toast.success(
+            id ? "Branch updated successfully." : "Branch added successfully.",
+            {
+              className:
+                " bg-green-950 text-white border  border border-green-400  rounded-xl ",
+            }
+          );
+        }
         navigate("/branches");
       })
       .catch((error) => {
