@@ -1,6 +1,9 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Sidebar from "./components/common/Sidebar";
+import Login from "./pages/Login";
+import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
 import UsersPage from "./pages/users/UsersPage";
 import AddEditUserPage from "./pages/users/AddEditUserPage";
 import CollegesPage from "./pages/colleges/CollegesPage";
@@ -23,64 +26,65 @@ import BranchDetailsPage from "./pages/branches/BranchDetailsPage";
 import AddEditBranchPage from "./pages/branches/AddEditBranchPage";
 
 function App() {
+  const location = useLocation();
+  const isAuthenticated = !!localStorage.getItem("token");
+
+  const showSidebar = isAuthenticated && location.pathname !== "/login";
+
   return (
     <div className="flex h-screen bg-black text-gray-100 overflow-hidden">
-      {/* BG */}
+      {/* Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-80" />
-        <div className="absolute inset-0 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-0" />
       </div>
 
-      <Sidebar />
-      <Toaster />
-      <Routes>
-        <Route path="/" element={<OverviewPage />} />
+      {/* Sidebar */}
+      {showSidebar && <Sidebar />}
 
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/addedituser" element={<AddEditUserPage />} />
-        <Route path="/addedituser/:id" element={<AddEditUserPage />} />
+      {/* Main Content */}
+      <div className={`flex-1 overflow-y-auto ${showSidebar ? "ml-64" : ""}`}>
+        <Toaster />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/overviewpage" element={<ProtectedRoute><OverviewPage /></ProtectedRoute>} />
 
-        <Route path="/branches" element={<BranchesPage />} />
-        <Route path="/viewbranchdetail/:id" element={<BranchDetailsPage />} />
-        <Route path="/addeditbranch/:id" element={<AddEditBranchPage />} />
-        <Route path="/addeditbranch" element={<AddEditBranchPage />} />
+          <Route path="/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
+          <Route path="/addedituser" element={<ProtectedRoute><AddEditUserPage /></ProtectedRoute>} />
+          <Route path="/addedituser/:id" element={<ProtectedRoute><AddEditUserPage /></ProtectedRoute>} />
 
-        <Route path="/colleges" element={<CollegesPage />} />
-        <Route path="/collegedetails/:id" element={<CollegeDetailsPage />} />
-        <Route path="/addeditcollege" element={<AddEditCollegePage />} />
-        <Route path="/addeditcollege/:id" element={<AddEditCollegePage />} />
-        <Route path="/viewcollege" element={<CollegeDetailsPage />} />
+          <Route path="/branches" element={<ProtectedRoute><BranchesPage /></ProtectedRoute>} />
+          <Route path="/viewbranchdetail/:id" element={<ProtectedRoute><BranchDetailsPage /></ProtectedRoute>} />
+          <Route path="/addeditbranch" element={<ProtectedRoute><AddEditBranchPage /></ProtectedRoute>} />
+          <Route path="/addeditbranch/:id" element={<ProtectedRoute><AddEditBranchPage /></ProtectedRoute>} />
 
-        <Route path="/country" element={<CountryPage />} />
-        <Route path="/addeditcountry" element={<AddEditCountryPage />} />
-        <Route path="/addeditcountry/:id" element={<AddEditCountryPage />} />
+          <Route path="/colleges" element={<ProtectedRoute><CollegesPage /></ProtectedRoute>} />
+          <Route path="/collegedetails/:id" element={<ProtectedRoute><CollegeDetailsPage /></ProtectedRoute>} />
+          <Route path="/addeditcollege" element={<ProtectedRoute><AddEditCollegePage /></ProtectedRoute>} />
+          <Route path="/addeditcollege/:id" element={<ProtectedRoute><AddEditCollegePage /></ProtectedRoute>} />
 
-        <Route path="/state" element={<StatesPage />} />
-        <Route path="/addeditstate" element={<AddEditStatePage />} />
-        <Route path="/addeditstate/:id" element={<AddEditStatePage />} />
+          <Route path="/country" element={<ProtectedRoute><CountryPage /></ProtectedRoute>} />
+          <Route path="/addeditcountry" element={<ProtectedRoute><AddEditCountryPage /></ProtectedRoute>} />
+          <Route path="/addeditcountry/:id" element={<ProtectedRoute><AddEditCountryPage /></ProtectedRoute>} />
 
-        <Route path="/city" element={<CityPage />} />
-        <Route path="/addeditcity" element={<AddEditCityPage />} />
-        <Route path="/addeditcity/:id" element={<AddEditCityPage />} />
+          <Route path="/state" element={<ProtectedRoute><StatesPage /></ProtectedRoute>} />
+          <Route path="/addeditstate" element={<ProtectedRoute><AddEditStatePage /></ProtectedRoute>} />
+          <Route path="/addeditstate/:id" element={<ProtectedRoute><AddEditStatePage /></ProtectedRoute>} />
 
-        <Route path="/courses" element={<CoursesPage />} />
-        <Route path="/addeditcourse" element={<AddEditCoursePage />} />
-        <Route path="/addeditcourse/:id" element={<AddEditCoursePage />} />
+          <Route path="/city" element={<ProtectedRoute><CityPage /></ProtectedRoute>} />
+          <Route path="/addeditcity" element={<ProtectedRoute><AddEditCityPage /></ProtectedRoute>} />
+          <Route path="/addeditcity/:id" element={<ProtectedRoute><AddEditCityPage /></ProtectedRoute>} />
 
-        <Route path="/collegecourse" element={<CollegeCoursePage />} />
-        <Route
-          path="/addeditcollegecourse/:id"
-          element={<AddEditCollegeCoursePage />}
-        />
-        <Route
-          path="/addeditcollegecourse"
-          element={<AddEditCollegeCoursePage />}
-        />
-        <Route
-          path="/collegecoursedetails/:id"
-          element={<CollegeCourseDetailsPage />}
-        />
-      </Routes>
+          <Route path="/courses" element={<ProtectedRoute><CoursesPage /></ProtectedRoute>} />
+          <Route path="/addeditcourse" element={<ProtectedRoute><AddEditCoursePage /></ProtectedRoute>} />
+          <Route path="/addeditcourse/:id" element={<ProtectedRoute><AddEditCoursePage /></ProtectedRoute>} />
+
+          <Route path="/collegecourse" element={<ProtectedRoute><CollegeCoursePage /></ProtectedRoute>} />
+          <Route path="/addeditcollegecourse" element={<ProtectedRoute><AddEditCollegeCoursePage /></ProtectedRoute>} />
+          <Route path="/addeditcollegecourse/:id" element={<ProtectedRoute><AddEditCollegeCoursePage /></ProtectedRoute>} />
+          <Route path="/collegecoursedetails/:id" element={<ProtectedRoute><CollegeCourseDetailsPage /></ProtectedRoute>} />
+        </Routes>
+      </div>
     </div>
   );
 }
