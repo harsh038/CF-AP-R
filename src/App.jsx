@@ -42,7 +42,7 @@ function App() {
       {showSidebar && <Sidebar />}
 
       {/* Main Content */}
-      <div className={`flex-1 overflow-y-auto ${showSidebar ? "ml-64" : ""}`}>
+      <div className={`flex-1 overflow-y-auto ${showSidebar ? "ml-0" : ""}`}>
         <Toaster />
         <Routes>
           <Route path="/login" element={<Login />} />
