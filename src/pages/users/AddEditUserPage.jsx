@@ -57,7 +57,6 @@ const AddEditUserPage = () => {
       .required("Password is required")
       .min(6, "Password must be at least 6 characters")
       .max(30, "Password must be less than 30 characters"),
-    role: Yup.string().required("Role is required"),
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
