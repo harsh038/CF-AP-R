@@ -15,7 +15,7 @@ const OverviewPage = () => {
   }, []);
 
   return (
-    <div className="flex-1 relative z-10 overflow-hidden">
+    <div className="flex-1 relative z-20 overflow-hidden">
       <div className="relative z-50">
         <Header title="Dashboard" />
       </div>
