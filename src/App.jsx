@@ -69,7 +69,7 @@ function App() {
                     element={<AddEditUserPage />}
                   />
 
-                  <Route path="/branches" element={<BranchesPage/>} />
+                  <Route path="/branches" element={<BranchesPage />} />
                   <Route
                     path="/viewbranchdetail/:id"
                     element={<BranchDetailsPage />}
@@ -84,7 +84,10 @@ function App() {
                   />
 
                   <Route path="/colleges" element={<CollegesPage />} />
-                  <Route path="/collegedetails/:id" element={<CollegeDetailsPage />} />
+                  <Route
+                    path="/collegedetails/:id"
+                    element={<CollegeDetailsPage />}
+                  />
                   <Route
                     path="/addeditcollege"
                     element={<AddEditCollegePage />}
@@ -94,7 +97,7 @@ function App() {
                     element={<AddEditCollegePage />}
                   />
 
-                  <Route path="/country" element={<CountryPage/>} />
+                  <Route path="/country" element={<CountryPage />} />
                   <Route
                     path="/addeditcountry"
                     element={<AddEditCountryPage />}
