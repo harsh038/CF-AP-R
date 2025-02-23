@@ -1,8 +1,8 @@
 import { FileInput, FileText, UserCheck, UserX } from "lucide-react";
 import { motion } from "framer-motion";
-import Header from "../../components/common/Header";
-import StatCard from "../../components/common/StatCard";
-import BranchesTable from "../../components/branches/BranchesTable";
+import Header from "../../components/Header";
+import StatCard from "../../components/StatCard";
+import BranchesTable from "./BranchesTable";
 
 const BranchesPage = () => {
   const branchesStats = {

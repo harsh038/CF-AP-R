@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
-import Header from "../../components/common/Header";
 import { motion } from "framer-motion";
 import * as Yup from "yup";
+import Header from "../../components/Header";
 
 const AddEditCollegePage = () => {
   const { id } = useParams();

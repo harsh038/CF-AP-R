@@ -3,8 +3,8 @@ import { Trash2, Edit } from "lucide-react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import Header from "../../components/common/Header";
-import DeleteSweetAlert from "../../components/common/DeleteSweetAlert";
+import Header from "../../components/Header";
+import DeleteSweetAlert from "../../components/DeleteSweetAlert";
 
 const CollegeCourseDetailsPage = () => {
   const { id } = useParams(); // Get college ID from route params
@@ -170,12 +170,13 @@ const CollegeCourseDetailsPage = () => {
                     {course.courseModel?.name || "Course Name"}
                   </h2>
                   <p className="text-sm text-gray-400 mb-2">
-                    <strong>Branch Name: </strong> {course.branchModel.branchName}
+                    <strong>Branch Name: </strong>{" "}
+                    {course.branchModel.branchName}
                   </p>
                   <p className="text-sm text-gray-400 mb-2">
                     <strong>Seats Available:</strong> {course.seatAvailable}
                   </p>
-                  
+
                   <p className="text-sm text-gray-400 mb-4">
                     <strong>Fee:</strong> ₹{course.fee}
                   </p>

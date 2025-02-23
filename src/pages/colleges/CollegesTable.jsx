@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import ReusableTable from "../ReusableTable";
+import ReusableTable from "../../components/ReusableTable";
 import { motion } from "framer-motion";
 
 function CollegesTable() {

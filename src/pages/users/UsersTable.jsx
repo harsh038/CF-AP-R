@@ -3,7 +3,7 @@ import { Edit, Search, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import DeleteSweetAlert from "../common/DeleteSweetAlert";
+import DeleteSweetAlert from "../../components/DeleteSweetAlert";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);

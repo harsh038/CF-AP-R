@@ -1,8 +1,8 @@
 import { BookOpenIcon, Clock, PlusCircle, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
-import Header from "../../components/common/Header";
-import StatCard from "../../components/common/StatCard";
+import Header from "../../components/Header";
+import StatCard from "../../components/StatCard";
 import CoursesTable from "../../components/courses/CoursesTable";
 
 const courseStats = {

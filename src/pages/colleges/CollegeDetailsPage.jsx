@@ -3,8 +3,8 @@ import { Edit, Trash2 } from "lucide-react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import Header from "../../components/common/Header";
-import DeleteSweetAlert from "../../components/common/DeleteSweetAlert";
+import Header from "../../components/Header";
+import DeleteSweetAlert from "../../components/DeleteSweetAlert";
 
 const CollegeDetailsPage = () => {
   const { id } = useParams();

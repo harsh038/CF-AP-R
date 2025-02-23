@@ -1,9 +1,9 @@
 import { UserCheck, UserPlus, UsersIcon, UserX } from "lucide-react";
 import { motion } from "framer-motion";
 
-import Header from "../../components/common/Header";
-import StatCard from "../../components/common/StatCard";
-import CollegeCourseTable from "../../components/collegeCourses/CollegeCourseTable";
+import Header from "../../components/Header";
+import StatCard from "../../components/StatCard";
+import CollegeCourseTable from "./CollegeCourseTable";
 
 
 const CollegeCourseStats = {

@@ -1,18 +1,15 @@
 import { Building, MapPin, UserCheck, UserX } from "lucide-react";
 import { motion } from "framer-motion";
-import Header from "../../components/common/Header";
-import StatCard from "../../components/common/StatCard";
+import Header from "../../components/Header";
+import StatCard from "../../components/StatCard";
 import { useState } from "react";
-import CityTable from "../../components/citys/CitysTable";
+import CityTable from "./CitysTable";
 
 const CityPage = () => {
-  const [cityStats, setCityStats] = useState({
-    totalCount: 0,
-    newTodayCount: 0,
-  });
+  const [cityStats, setCityStats] = useState(0);
 
-  const updateCityStats = (total, newToday) => {
-    setCityStats({ totalCount: total, newTodayCount: newToday });
+  const updateCityStats = (total) => {
+    setCityStats(total);
   };
 
   return (
@@ -30,13 +27,13 @@ const CityPage = () => {
           <StatCard
             name="Total Cities"
             icon={Building}
-            value={cityStats.totalCount}
+            value={cityStats}
             color="#6366F1"
           />
           <StatCard
             name="New Cities Today"
             icon={MapPin}
-            value={cityStats.newTodayCount}
+            value={2222}
             color="#10B981"
           />
           <StatCard

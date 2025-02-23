@@ -1,8 +1,8 @@
 import { FileInput, FileText, UserCheck, UserX } from "lucide-react";
 import { motion } from "framer-motion";
 
-import Header from "../../components/common/Header";
-import StatCard from "../../components/common/StatCard";
+import Header from "../../components/Header";
+import StatCard from "../../components/StatCard";
 import CountryTable from "../../components/country/CountryTable";
 
 const countryStats = {

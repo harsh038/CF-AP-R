@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
-import Header from "../../components/common/Header";
+import Header from "../../components/Header";
 
 const AddEditCountryPage = () => {
   const { id } = useParams();

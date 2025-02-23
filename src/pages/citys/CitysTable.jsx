@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import ReusableTable from "../ReusableTable";
+import ReusableTable from "../../components/ReusableTable";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
-import DeleteSweetAlert from "../common/DeleteSweetAlert";
+import DeleteSweetAlert from "../../components/DeleteSweetAlert";
 
 function CityTable({ updateCityStats }) {
   const [cities, setCities] = useState([]);
@@ -15,10 +15,7 @@ function CityTable({ updateCityStats }) {
       .then((res) => res.json())
       .then((data) => {
         setCities(data);
-        updateCityStats(
-          data.length,
-          data.filter((c) => isToday(c.lastUpdated)).length
-        );
+        updateCityStats(data.length);
       })
       .catch((error) => console.error("Error fetching cities:", error));
   }, [updateCityStats]);
@@ -55,10 +52,7 @@ function CityTable({ updateCityStats }) {
 
         toast.success("City Deleted Successfully");
         setCities((prevCities) => prevCities.filter((c) => c.cityID !== id));
-        updateCityStats(
-          cities.length - 1,
-          cities.filter((c) => isToday(c.lastUpdated)).length
-        );
+        updateCityStats(cities.length - 1);
       } catch (error) {
         console.error("Error deleting city:", error);
       }

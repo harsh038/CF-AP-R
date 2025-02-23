@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import ReusableTable from "../ReusableTable";
+import ReusableTable from "../../components/ReusableTable";
 import { motion } from "framer-motion";
 
 function BranchesTable() {
@@ -35,7 +35,7 @@ function BranchesTable() {
       handleSearch={handleSearch}
       addButtonLabel="Add Branch"
       addButtonLink="/addeditbranch"
-      tableName="Branches List" 
+      tableName="Branches List"
     >
       {filteredBranches.map((branch, index) => (
         <motion.tr
