@@ -8,6 +8,7 @@ import {
   MapPin,
   Menu,
   School,
+  User2Icon,
   Users,
 } from "lucide-react";
 import { useState } from "react";
@@ -21,7 +22,7 @@ const SIDEBAR_ITEMS = [
     color: "#6366f1",
     href: "/",
   },
-  { name: "Users", icon: Users, color: "#8B5CF6", href: "/users" },
+  { name: "Users", icon: Users, color: "#8B5CF6", href: "/admin/users" },
   { name: "Colleges", icon: School, color: "#EC4899", href: "/colleges" },
   { name: "Courses", icon: FolderOpenDot, color: "#10B981", href: "/courses" },
   { name: "Branches", icon: Layers, color: "#F59E0B", href: "/branches" },
@@ -34,7 +35,7 @@ const SIDEBAR_ITEMS = [
     color: "#3B82F6",
     href: "/collegecourse",
   },
-  //   { name: "Profile", icon: User2Icon, color: "#6EE7B7", href: "/settings" },
+  { name: "Profile", icon: User2Icon, color: "#6EE7B7", href: "/dashboard" },
 ];
 
 const Sidebar = () => {

@@ -79,7 +79,7 @@ function UsersTable() {
       searchTerm={searchTerm}
       handleSearch={(e) => setSearchTerm(e.target.value)}
       addButtonLabel="Add User"
-      addButtonLink="/addedituser"
+      addButtonLink="/admin/addedituser"
       tableName="Users List"
     >
       {filteredUsers.map((user, index) => (
@@ -108,7 +108,7 @@ function UsersTable() {
             {user.role}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/addedituser/${user.userID}`}>
+            <Link to={`/admin/addedituser/${user.userID}`}>
               <button className="text-indigo-400 hover:text-indigo-300 mr-2">
                 <Edit size={18} />
               </button>

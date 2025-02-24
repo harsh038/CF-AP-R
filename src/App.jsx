@@ -62,10 +62,10 @@ function App() {
 
                 {/* Admin-Only Routes */}
                 <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
-                  <Route path="/users" element={<UsersPage />} />
-                  <Route path="/addedituser" element={<AddEditUserPage />} />
+                  <Route path="/admin/users" element={<UsersPage />} />
+                  <Route path="/admin/addedituser" element={<AddEditUserPage />} />
                   <Route
-                    path="/addedituser/:id"
+                    path="/admin/addedituser/:id"
                     element={<AddEditUserPage />}
                   />
 

@@ -89,7 +89,7 @@ const AddEditUserPage = () => {
             className:
               " bg-green-950 text-white border  border border-green-400  rounded-xl ",
           });
-          navigate("/users");
+          navigate("/admin/users");
         })
         .catch((error) => {
           toast.error("Error updating user.", {
@@ -112,7 +112,7 @@ const AddEditUserPage = () => {
             className:
               " bg-green-950 text-white border  border border-green-400  rounded-xl ",
           });
-          navigate("/users");
+          navigate("/admin/users");
         })
         .catch((error) => {
           toast.error("Error adding user.", {
