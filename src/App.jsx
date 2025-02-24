@@ -1,18 +1,31 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { Login, Dashboard} from './Forms';
+import { Login, Dashboard } from "./Forms";
 import ProtectedRoute from "./context/ProtectedRoute";
+import Dashboard from "./Forms/Dashboard";
 import OverviewPage from "./pages/overview/OverviewPage";
 import UserHomePage from "./UserHomePage";
 import Sidebar from "./components/Sidebar";
-import { BranchesPage, AddEditBranchPage, BranchDetailsPage } from "./pages/branches";
-import { CityPage, AddEditCityPage} from './pages/citys';
-import { CollegeCoursePage, AddEditCollegeCoursePage, CollegeCourseDetailsPage} from './pages/collegeCourses';
-import { CollegesPage, AddEditCollegePage, CollegeDetailsPage} from './pages/colleges';
-import { CountryPage, AddEditCountryPage} from './pages/countrys';
-import { CoursesPage, AddEditCoursesPage} from './pages/courses';
-import { StatesPage, AddEditStatePage} from './pages/states';
-import { UsersPage, AddEditUserPage} from './pages/users';
+import {
+  BranchesPage,
+  AddEditBranchPage,
+  BranchDetailsPage,
+} from "./pages/branches";
+import { CityPage, AddEditCityPage } from "./pages/citys";
+import {
+  CollegeCoursePage,
+  AddEditCollegeCoursePage,
+  CollegeCourseDetailsPage,
+} from "./pages/collegeCourses";
+import {
+  CollegesPage,
+  AddEditCollegePage,
+  CollegeDetailsPage,
+} from "./pages/colleges";
+import { CountryPage, AddEditCountryPage } from "./pages/countrys";
+import { CoursesPage, AddEditCoursesPage } from "./pages/courses";
+import { StatesPage, AddEditStatePage } from "./pages/states";
+import { UsersPage, AddEditUserPage } from "./pages/users";
 
 function App() {
   const location = useLocation();
