@@ -69,82 +69,82 @@ function App() {
                     element={<AddEditUserPage />}
                   />
 
-                  <Route path="/branches" element={<BranchesPage />} />
+                  <Route path="/admin/branches" element={<BranchesPage />} />
                   <Route
-                    path="/viewbranchdetail/:id"
+                    path="/admin/viewbranchdetail/:id"
                     element={<BranchDetailsPage />}
                   />
                   <Route
-                    path="/addeditbranch"
+                    path="/admin/addeditbranch"
                     element={<AddEditBranchPage />}
                   />
                   <Route
-                    path="/addeditbranch/:id"
+                    path="/admin/addeditbranch/:id"
                     element={<AddEditBranchPage />}
                   />
 
-                  <Route path="/colleges" element={<CollegesPage />} />
+                  <Route path="/admin/colleges" element={<CollegesPage />} />
                   <Route
-                    path="/collegedetails/:id"
+                    path="/admin/collegedetails/:id"
                     element={<CollegeDetailsPage />}
                   />
                   <Route
-                    path="/addeditcollege"
+                    path="/admin/addeditcollege"
                     element={<AddEditCollegePage />}
                   />
                   <Route
-                    path="/addeditcollege/:id"
+                    path="/admin/addeditcollege/:id"
                     element={<AddEditCollegePage />}
                   />
 
-                  <Route path="/country" element={<CountryPage />} />
+                  <Route path="/admin/country" element={<CountryPage />} />
                   <Route
-                    path="/addeditcountry"
+                    path="/admin/addeditcountry"
                     element={<AddEditCountryPage />}
                   />
                   <Route
-                    path="/addeditcountry/:id"
+                    path="/admin/addeditcountry/:id"
                     element={<AddEditCountryPage />}
                   />
 
-                  <Route path="/state" element={<StatesPage />} />
-                  <Route path="/addeditstate" element={<AddEditStatePage />} />
+                  <Route path="/admin/state" element={<StatesPage />} />
+                  <Route path="/admin/addeditstate" element={<AddEditStatePage />} />
                   <Route
-                    path="/addeditstate/:id"
+                    path="/admin/addeditstate/:id"
                     element={<AddEditStatePage />}
                   />
 
-                  <Route path="/city" element={<CityPage />} />
-                  <Route path="/addeditcity" element={<AddEditCityPage />} />
+                  <Route path="/admin/city" element={<CityPage />} />
+                  <Route path="/admin/addeditcity" element={<AddEditCityPage />} />
                   <Route
-                    path="/addeditcity/:id"
+                    path="/admin/addeditcity/:id"
                     element={<AddEditCityPage />}
                   />
 
-                  <Route path="/courses" element={<CoursesPage />} />
+                  <Route path="/admin/courses" element={<CoursesPage />} />
                   <Route
-                    path="/addeditcourse"
+                    path="/admin/addeditcourse"
                     element={<AddEditCoursesPage />}
                   />
                   <Route
-                    path="/addeditcourse/:id"
+                    path="/admin/addeditcourse/:id"
                     element={<AddEditCoursesPage />}
                   />
 
                   <Route
-                    path="/collegecourse"
+                    path="/admin/collegecourse"
                     element={<CollegeCoursePage />}
                   />
                   <Route
-                    path="/addeditcollegecourse"
+                    path="/admin/addeditcollegecourse"
                     element={<AddEditCollegeCoursePage />}
                   />
                   <Route
-                    path="/addeditcollegecourse/:id"
+                    path="/admin/addeditcollegecourse/:id"
                     element={<AddEditCollegeCoursePage />}
                   />
                   <Route
-                    path="/collegecoursedetails/:id"
+                    path="/admin/collegecoursedetails/:id"
                     element={<CollegeCourseDetailsPage />}
                   />
                 </Route>

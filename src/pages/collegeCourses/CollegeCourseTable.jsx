@@ -22,7 +22,9 @@ function CollegeCourseTable() {
         });
         setCollegeCourses(filteredData);
       })
-      .catch((error) => console.error("Error fetching College Courses:", error));
+      .catch((error) =>
+        console.error("Error fetching College Courses:", error)
+      );
   }, []);
 
   const handleSearch = (e) => {
@@ -38,12 +40,18 @@ function CollegeCourseTable() {
 
   return (
     <ReusableTable
-      columns={["No.", "College Name", "Total Courses", "Total Seats Available", "Actions"]}
+      columns={[
+        "No.",
+        "College Name",
+        "Total Courses",
+        "Total Seats Available",
+        "Actions",
+      ]}
       data={filteredCollegeCourses}
       searchTerm={searchTerm}
       handleSearch={handleSearch}
       addButtonLabel="Add College Course"
-      addButtonLink="/addeditcollegecourse"
+      addButtonLink="/admin/addeditcollegecourse"
       tableName="College Course List" // Dynamic table name
     >
       {filteredCollegeCourses.map((college, index) => (
@@ -66,7 +74,7 @@ function CollegeCourseTable() {
             {college.totalSeatAvailable || "N/A"}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/collegecoursedetails/${college.collegeID}`}>
+            <Link to={`/admin/collegecoursedetails/${college.collegeID}`}>
               <button className="text-blue-500 hover:text-blue-300 mr-2">
                 <Eye size={18} />
               </button>

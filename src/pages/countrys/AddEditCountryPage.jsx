@@ -94,7 +94,7 @@ const AddEditCountryPage = () => {
               " bg-green-950 text-white border border-green-400 rounded-xl",
           }
         );
-        navigate("/country");
+        navigate("/admin/country");
       })
       .catch((error) => {
         toast.error("Error saving country.", {

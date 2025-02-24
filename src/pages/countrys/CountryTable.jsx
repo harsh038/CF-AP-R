@@ -71,7 +71,7 @@ function CountryTable() {
       searchTerm={searchTerm}
       handleSearch={(e) => setSearchTerm(e.target.value)}
       addButtonLabel="Add Country"
-      addButtonLink="/addeditcountry"
+      addButtonLink="/admin/addeditcountry"
       tableName="Country List"
     >
       {filteredCountries.map((country, index) => (
@@ -88,7 +88,7 @@ function CountryTable() {
             {country.name}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/addeditcountry/${country.countryID}`}>
+            <Link to={`/admin/addeditcountry/${country.countryID}`}>
               <button className="text-indigo-400 hover:text-indigo-300 mr-2">
                 <Edit size={18} />
               </button>

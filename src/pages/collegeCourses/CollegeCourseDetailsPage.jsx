@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Trash2, Edit } from "lucide-react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Header from "../../components/Header";
@@ -8,7 +8,6 @@ import DeleteSweetAlert from "../../components/DeleteSweetAlert";
 
 const CollegeCourseDetailsPage = () => {
   const { id } = useParams(); // Get college ID from route params
-  const navigate = useNavigate(); // For navigation after certain actions
   const [collegeCourses, setCollegeCourses] = useState([]); // List of college courses
   const [collegeName, setCollegeName] = useState(""); // Dynamic college name
   const [filters, setFilters] = useState({
@@ -187,7 +186,7 @@ const CollegeCourseDetailsPage = () => {
 
                   <div className="flex justify-end gap-4">
                     <Link
-                      to={`/addeditcollegecourse/${course.collegeCourseID}`}
+                      to={`/admin/addeditcollegecourse/${course.collegeCourseID}`}
                       className="text-blue-500 hover:text-blue-300"
                     >
                       <Edit size={20} />

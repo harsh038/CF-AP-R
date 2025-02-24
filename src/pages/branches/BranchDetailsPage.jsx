@@ -78,7 +78,7 @@ const BranchDetailsPage = () => {
 
                 {/* Actions */}
                 <div className="flex justify-start gap-4 mt-6">
-                  <Link to={`/addeditbranch/${branch.branchID}`}>
+                  <Link to={`/admin/addeditbranch/${branch.branchID}`}>
                     <button className="flex items-center bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300">
                       <Edit className="mr-2" /> Edit
                     </button>

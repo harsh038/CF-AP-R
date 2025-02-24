@@ -100,7 +100,7 @@ const AddEditStatePage = () => {
               " bg-green-950 text-white border  border border-green-400  rounded-xl ",
           }
         );
-        navigate("/state");
+        navigate("/admin/state");
       })
       .catch((error) => {
         toast.error(error.message || "Error adding state.", {

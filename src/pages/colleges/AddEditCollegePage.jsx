@@ -169,7 +169,7 @@ const AddEditCollegePage = () => {
         toast.success(
           id ? "College updated successfully." : "College added successfully."
         );
-        navigate("/colleges");
+        navigate("/admin/colleges");
       })
       .catch((error) => {
         toast.error(error.message || "Error adding college.");

@@ -31,12 +31,17 @@ function StateTable() {
         })
         .then((data) => {
           if (data.foreignKey) {
-            toast.error("State can't be deleted as it is associated with a City", {
-              className: "bg-red-950 text-white border border-red-400 rounded-xl",
-            });
+            toast.error(
+              "State can't be deleted as it is associated with a City",
+              {
+                className:
+                  "bg-red-950 text-white border border-red-400 rounded-xl",
+              }
+            );
           } else {
             toast.success("State Deleted Successfully", {
-              className: "bg-green-950 text-white border border-green-400 rounded-xl",
+              className:
+                "bg-green-950 text-white border border-green-400 rounded-xl",
             });
             setStates((prev) => prev.filter((s) => s.stateID !== id));
           }
@@ -61,7 +66,7 @@ function StateTable() {
       searchTerm={searchTerm}
       handleSearch={(e) => setSearchTerm(e.target.value)}
       addButtonLabel="Add State"
-      addButtonLink="/addeditstate"
+      addButtonLink="/admin/addeditstate"
       tableName="State List"
     >
       {filteredStates.map((state, index) => (
@@ -81,7 +86,7 @@ function StateTable() {
             {state.countryModel.name}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/addeditstate/${state.stateID}`}>
+            <Link to={`/admin/addeditstate/${state.stateID}`}>
               <button className="text-indigo-400 hover:text-indigo-300 mr-2">
                 <Edit size={18} />
               </button>

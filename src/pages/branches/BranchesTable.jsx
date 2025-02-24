@@ -34,7 +34,7 @@ function BranchesTable() {
       searchTerm={searchTerm}
       handleSearch={handleSearch}
       addButtonLabel="Add Branch"
-      addButtonLink="/addeditbranch"
+      addButtonLink="/admin/addeditbranch"
       tableName="Branches List"
     >
       {filteredBranches.map((branch, index) => (
@@ -54,7 +54,7 @@ function BranchesTable() {
             {branch.courseModel.name}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/viewbranchdetail/${branch.branchID}`}>
+            <Link to={`/admin/viewbranchdetail/${branch.branchID}`}>
               <button className="text-indigo-400 hover:text-indigo-300 mr-2">
                 <Eye size={18} />
               </button>

@@ -29,10 +29,10 @@ const CollegeDetailsPage = () => {
             toast.error(
               "Delete dependent rows from CollegeCourse or Reviews table first"
             );
-            navigate("/colleges");
+            navigate("/admin/colleges");
           } else {
             toast.success("College deleted successfully");
-            navigate("/colleges");
+            navigate("/admin/colleges");
           }
         })
         .catch((error) => {
@@ -98,7 +98,7 @@ const CollegeDetailsPage = () => {
 
                 {/* Actions */}
                 <div className="flex justify-start gap-4 mt-6">
-                  <Link to={`/addeditcollege/${college.collegeID}`}>
+                  <Link to={`/admin/addeditcollege/${college.collegeID}`}>
                     <button className="flex items-center bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300">
                       <Edit className="mr-2" /> Edit
                     </button>

@@ -157,7 +157,7 @@ const AddEditCityPage = () => {
         toast.success(
           id ? "City updated successfully." : "City added successfully."
         );
-        navigate("/city");
+        navigate("/admin/city");
       })
       .catch((error) => {
         toast.error(error.message || "Error adding city.");

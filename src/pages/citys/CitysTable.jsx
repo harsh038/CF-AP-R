@@ -66,7 +66,7 @@ function CityTable({ updateCityStats }) {
       searchTerm={searchTerm}
       handleSearch={handleSearch}
       addButtonLabel="Add City"
-      addButtonLink="/addeditcity"
+      addButtonLink="/admin/addeditcity"
       tableName="Cities List" // Dynamic table name
     >
       {filteredCities.map((city, index) => (
@@ -86,7 +86,7 @@ function CityTable({ updateCityStats }) {
             {city.stateModel.name}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/addeditcity/${city.cityID}`}>
+            <Link to={`/admin/addeditcity/${city.cityID}`}>
               <button className="text-indigo-400 hover:text-indigo-300 mr-2">
                 <Edit size={18} />
               </button>

@@ -59,7 +59,7 @@ function CoursesTable() {
       searchTerm={searchTerm}
       handleSearch={(e) => setSearchTerm(e.target.value)}
       addButtonLabel="Add Course"
-      addButtonLink="/addeditcourse"
+      addButtonLink="/admin/addeditcourse"
       tableName="Courses List"
     >
       {filteredCourses.map((course, index) => (
@@ -79,7 +79,7 @@ function CoursesTable() {
             {course.duration}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/addeditcourse/${course.courseID}`}>
+            <Link to={`/admin/addeditcourse/${course.courseID}`}>
               <button className="text-indigo-400 hover:text-indigo-300 mr-2">
                 <Edit size={18} />
               </button>

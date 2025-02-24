@@ -36,7 +36,7 @@ function CollegesTable() {
       searchTerm={searchTerm}
       handleSearch={handleSearch}
       addButtonLabel="Add College"
-      addButtonLink="/addeditcollege"
+      addButtonLink="/admin/addeditcollege"
       tableName="Colleges List"
     >
       {filteredColleges.map((college, index) => (
@@ -64,7 +64,7 @@ function CollegesTable() {
             {college.establishmentYear}
           </td>
           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-            <Link to={`/collegedetails/${college.collegeID}`}>
+            <Link to={`/admin/collegedetails/${college.collegeID}`}>
               <button className="text-blue-500 hover:text-blue-300 mr-2">
                 <Eye size={18} />
               </button>

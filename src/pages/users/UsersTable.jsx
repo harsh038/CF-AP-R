@@ -38,12 +38,17 @@ function UsersTable() {
 
         const data = await res.json();
         if (data.foreignKey) {
-          toast.error("User can't be deleted as it is associated with a ReviewTable", {
-            className: "bg-red-950 text-white border border-red-400 rounded-xl",
-          });
+          toast.error(
+            "User can't be deleted as it is associated with a ReviewTable",
+            {
+              className:
+                "bg-red-950 text-white border border-red-400 rounded-xl",
+            }
+          );
         } else {
           toast.success("User Deleted Successfully", {
-            className: "bg-green-950 text-white border border-green-400 rounded-xl",
+            className:
+              "bg-green-950 text-white border border-green-400 rounded-xl",
           });
           setUsers((prev) => prev.filter((u) => u.userID !== id));
         }
@@ -74,7 +79,15 @@ function UsersTable() {
 
   return (
     <ReusableTable
-      columns={["No.", "First Name", "Last Name", "Email", "Password", "Role", "Actions"]}
+      columns={[
+        "No.",
+        "First Name",
+        "Last Name",
+        "Email",
+        "Password",
+        "Role",
+        "Actions",
+      ]}
       data={filteredUsers}
       searchTerm={searchTerm}
       handleSearch={(e) => setSearchTerm(e.target.value)}

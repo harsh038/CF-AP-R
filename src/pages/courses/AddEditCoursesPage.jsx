@@ -74,7 +74,7 @@ const AddEditCoursesPage = () => {
             className:
               " bg-green-950 text-white border  border border-green-400  rounded-xl ",
           });
-          navigate("/courses");
+          navigate("/admin/courses");
         })
         .catch((error) => {
           toast.error("Error updating user.", {

@@ -102,7 +102,7 @@ const AddEditBranchPage = () => {
             }
           );
         }
-        navigate("/branches");
+        navigate("/admin/branches");
       })
       .catch((error) => {
         toast.error(error.message || "Error adding Branch.", {
