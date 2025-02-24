@@ -1,30 +1,18 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import Login from "./pages/Login";
-import ProtectedRoute from "./ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
-import UsersPage from "./pages/users/UsersPage";
-import AddEditUserPage from "./pages/users/AddEditUserPage";
-import CollegesPage from "./pages/colleges/CollegesPage";
-import AddEditCollegePage from "./pages/colleges/AddEditCollegePage";
-import AddEditCountryPage from "./pages/countrys/AddEditCountryPage";
-import AddEditStatePage from "./pages/states/AddEditStatePage";
-import StatesPage from "./pages/states/StatesPage";
-import CityPage from "./pages/citys/CitysPage";
-import AddEditCityPage from "./pages/citys/AddEditCityPage";
-import CoursesPage from "./pages/courses/CoursesPage";
-import AddEditCoursePage from "./pages/courses/AddEditCoursesPage";
-import CollegeCoursePage from "./pages/collegeCourses/CollegeCoursePage";
-import CollegeCourseDetailsPage from "./pages/collegeCourses/CollegeCourseDetailsPage";
-import AddEditCollegeCoursePage from "./pages/collegeCourses/AddEditCollegeCoursePage";
+import { Login, Dashboard} from './Forms';
+import ProtectedRoute from "./context/ProtectedRoute";
 import OverviewPage from "./pages/overview/OverviewPage";
-import BranchDetailsPage from "./pages/branches/BranchDetailsPage";
-import AddEditBranchPage from "./pages/branches/AddEditBranchPage";
 import UserHomePage from "./UserHomePage";
 import Sidebar from "./components/Sidebar";
-import CollegeDetailsPage from "./pages/colleges/CollegeDetailsPage";
-import BranchesPage from "./pages/branches/BranchesPage";
-import CountryPage from "./pages/countrys/CountryPage";
+import { BranchesPage, AddEditBranchPage, BranchDetailsPage } from "./pages/branches";
+import { CityPage, AddEditCityPage} from './pages/citys';
+import { CollegeCoursePage, AddEditCollegeCoursePage, CollegeCourseDetailsPage} from './pages/collegeCourses';
+import { CollegesPage, AddEditCollegePage, CollegeDetailsPage} from './pages/colleges';
+import { CountryPage, AddEditCountryPage} from './pages/countrys';
+import { CoursesPage, AddEditCoursesPage} from './pages/courses';
+import { StatesPage, AddEditStatePage} from './pages/states';
+import { UsersPage, AddEditUserPage} from './pages/users';
 
 function App() {
   const location = useLocation();
@@ -124,11 +112,11 @@ function App() {
                   <Route path="/courses" element={<CoursesPage />} />
                   <Route
                     path="/addeditcourse"
-                    element={<AddEditCoursePage />}
+                    element={<AddEditCoursesPage />}
                   />
                   <Route
                     path="/addeditcourse/:id"
-                    element={<AddEditCoursePage />}
+                    element={<AddEditCoursesPage />}
                   />
 
                   <Route
