@@ -50,7 +50,6 @@ const AddEditCityPage = () => {
         `http://localhost:5050/api/State/StateDropDown/${countryID}`
       ).then((data) => {
         setStateDD(data);
-        console.log(data);
       });
     } else {
       setStateDD([]); // Clear state dropdown
@@ -61,7 +60,6 @@ const AddEditCityPage = () => {
   useEffect(() => {
     if (id) {
       fetchData(`http://localhost:5050/api/City/${id}`).then((cityData) => {
-        console.log(cityData);
 
         setFormData({
           countryID: cityData.countryId,
@@ -101,18 +99,11 @@ const AddEditCityPage = () => {
         "City already exists for the selected state and country",
         function (value) {
           const { countryID, stateID } = this.parent; // Access related fields
-          console.log("Validating city (case-insensitive):", {
-            countryID,
-            stateID,
-            name: value,
-          });
+        
 
           if (!countryID || !stateID || !value) {
-            console.log("Validation skipped due to missing fields");
-            return true; // Skip validation if prerequisites are missing
+            return true;
           }
-
-          // Convert city names to lowercase for case-insensitive comparison
           const isDuplicate = allCities.some((city) => {
             const match =
               city.name.toLowerCase() === value.toLowerCase() &&
@@ -130,7 +121,7 @@ const AddEditCityPage = () => {
             console.log("Validation passed: City is unique.");
           }
 
-          return !isDuplicate; // Pass validation if no duplicate exists
+          return !isDuplicate;
         }
       ),
   });

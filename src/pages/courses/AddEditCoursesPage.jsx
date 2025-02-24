@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import { motion } from "framer-motion";
 import * as Yup from "yup";
 
-const AddEditCoursePage = () => {
+const AddEditCoursesPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -50,10 +50,8 @@ const AddEditCoursePage = () => {
     try {
       await ValidationSchema.validate(formData, { abortEarly: false });
       setErrors({});
-      //abortEarly:true---->return from validation on the first error rather than after all validations complete
     } catch (error) {
-      // console.log(error.inner);
-      // error.inner is an array of errors
+      
       const newErrors = {};
 
       error.inner.forEach((err) => {
@@ -173,4 +171,4 @@ const AddEditCoursePage = () => {
     </>
   );
 };
-export default AddEditCoursePage;
+export default AddEditCoursesPage;

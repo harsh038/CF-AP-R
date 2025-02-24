@@ -38,7 +38,6 @@ const AddEditCollegeCoursePage = () => {
       fetch(`http://localhost:5050/api/CollegeCourse/${id}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
 
           setFormData({
             collegeID: data.collegeID,
