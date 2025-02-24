@@ -2,7 +2,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { Login, Dashboard } from "./Forms";
 import ProtectedRoute from "./context/ProtectedRoute";
-import Dashboard from "./Forms/Dashboard";
 import OverviewPage from "./pages/overview/OverviewPage";
 import UserHomePage from "./UserHomePage";
 import Sidebar from "./components/Sidebar";
