@@ -1,2 +1,2 @@
-export { default as CoursesPage } from './CoursesPage';
-export { default as AddEditCoursesPage } from './AddEditCoursesPage';
+export { default as CoursesPage } from "./CoursesPage";
+export { default as AddEditCoursesPage } from "./AddEditCoursesPage";
