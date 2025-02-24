@@ -31,10 +31,13 @@ function CoursesTable() {
         })
         .then((data) => {
           if (data.foreignKey) {
-            toast.error("Delete dependent rows from CollegeCourse or Syllabus table first");
+            toast.error(
+              "Delete dependent rows from CollegeCourse or Syllabus table first"
+            );
           } else {
             toast.success("Course Deleted Successfully", {
-              className: "bg-green-950 text-white border border-green-400 rounded-xl",
+              className:
+                "bg-green-950 text-white border border-green-400 rounded-xl",
             });
             setCourses((prev) => prev.filter((c) => c.courseID !== id));
           }

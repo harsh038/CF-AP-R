@@ -18,19 +18,25 @@ const BranchDetailsPage = () => {
       .catch((error) => console.error("Error fetching Branch:", error));
   }, [id]);
 
-  const deleteBranches = () => {
+  const deleteBranches = (id) => {
     DeleteSweetAlert("You won't be able to revert the Branches!", () => {
       fetch(`http://localhost:5050/api/Branch/${id}`, { method: "DELETE" })
         .then((res) => {
           if (res.ok) {
-            toast.success("Branches Deleted Successfully", {
+            return res.json();
+          } else {
+            toast.error("Internal Server Error");
+          }
+        })
+        .then((data) => {
+          if (data.foreignKey) {
+            toast.error("Delete dependent rows from CollegeCourse table");
+          } else {
+            toast.success("Branch Deleted Successfully", {
               className:
                 "bg-green-950 text-white border border-green-400 rounded-xl",
             });
-            navigate("/branches");
-          } else {
-            toast.error("Internal Server Error");
-            navigate("/branches");
+            navigate(-1);
           }
         })
         .catch((error) => console.error("Error deleting Branches:", error));
@@ -80,7 +86,7 @@ const BranchDetailsPage = () => {
                   <button
                     className="flex items-center bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300"
                     onClick={() => {
-                      deleteBranches();
+                      deleteBranches(id);
                     }}
                   >
                     <Trash2 className="mr-2" /> Delete
