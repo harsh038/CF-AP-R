@@ -20,7 +20,7 @@ const SIDEBAR_ITEMS = [
     name: "Dashboard",
     icon: BarChart2,
     color: "#6366f1",
-    href: "/",
+    href: "/admin/overview",
   },
   { name: "Users", icon: Users, color: "#8B5CF6", href: "/admin/users" },
   { name: "Colleges", icon: School, color: "#EC4899", href: "/admin/colleges" },
@@ -33,9 +33,9 @@ const SIDEBAR_ITEMS = [
     name: " College-Wise Courses ",
     icon: Building2,
     color: "#3B82F6",
-    href: "/collegecourse",
+    href: "/admin/collegecourse",
   },
-  { name: "Profile", icon: User2Icon, color: "#6EE7B7", href: "/dashboard" },
+  { name: "Profile", icon: User2Icon, color: "#6EE7B7", href: "/admin/dashboard" },
 ];
 
 const Sidebar = () => {

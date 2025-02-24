@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { Login, Dashboard } from "./Forms";
 import ProtectedRoute from "./context/ProtectedRoute";
 import OverviewPage from "./pages/overview/OverviewPage";
-import UserHomePage from "./UserHomePage";
+// import UserHomePage from "./UserHomePage";
 import Sidebar from "./components/Sidebar";
 import {
   BranchesPage,
@@ -57,13 +57,16 @@ function App() {
             {/* Admin Dashboard */}
             {user?.role === "Admin" && (
               <>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/overviewpage" element={<OverviewPage />} />
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/overview" element={<OverviewPage />} />
 
                 {/* Admin-Only Routes */}
                 <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
                   <Route path="/admin/users" element={<UsersPage />} />
-                  <Route path="/admin/addedituser" element={<AddEditUserPage />} />
+                  <Route
+                    path="/admin/addedituser"
+                    element={<AddEditUserPage />}
+                  />
                   <Route
                     path="/admin/addedituser/:id"
                     element={<AddEditUserPage />}
@@ -108,14 +111,20 @@ function App() {
                   />
 
                   <Route path="/admin/state" element={<StatesPage />} />
-                  <Route path="/admin/addeditstate" element={<AddEditStatePage />} />
+                  <Route
+                    path="/admin/addeditstate"
+                    element={<AddEditStatePage />}
+                  />
                   <Route
                     path="/admin/addeditstate/:id"
                     element={<AddEditStatePage />}
                   />
 
                   <Route path="/admin/city" element={<CityPage />} />
-                  <Route path="/admin/addeditcity" element={<AddEditCityPage />} />
+                  <Route
+                    path="/admin/addeditcity"
+                    element={<AddEditCityPage />}
+                  />
                   <Route
                     path="/admin/addeditcity/:id"
                     element={<AddEditCityPage />}
@@ -152,7 +161,7 @@ function App() {
             )}
 
             {/* User Homepage (Different UI for Users) */}
-            <Route path="/dashboard" element={<UserHomePage />} />
+            {/* <Route path="/dashboard" element={<UserHomePage />} /> */}
           </Route>
 
           {/* Shared Routes (Admin and User) */}
