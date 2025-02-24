@@ -8,7 +8,6 @@ import {
   MapPin,
   Menu,
   School,
-  User2Icon,
   Users,
 } from "lucide-react";
 import { useState } from "react";
