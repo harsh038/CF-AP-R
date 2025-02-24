@@ -19,8 +19,6 @@ const AddEditCoursePage = () => {
       fetch(`http://localhost:5050/api/Course/${id}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-
           setFormData({
             name: data.name,
             duration: data.duration,

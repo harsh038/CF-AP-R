@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import Header from "../../components/Header";
 import StatCard from "../../components/StatCard";
-import StateTable from "../../components/state/StateTable";
+import StateTable from "./StateTable";
 
 const stateStats = {
   totalStates: 152845,

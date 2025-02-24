@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import Header from "../../components/Header";
 import StatCard from "../../components/StatCard";
-import CountryTable from "../../components/country/CountryTable";
+import CountryTable from "./CountryTable";
 
 const countryStats = {
   totalCountrys: 152845,
@@ -51,7 +51,7 @@ const CountryPage = () => {
           />
         </motion.div>
 
-        <CountryTable />
+        <CountryTable/>
       </main>
     </div>
   );
