@@ -3,7 +3,6 @@ import { Toaster } from "react-hot-toast";
 import { Login, Dashboard } from "./Forms";
 import ProtectedRoute from "./context/ProtectedRoute";
 import OverviewPage from "./pages/overview/OverviewPage";
-// import UserHomePage from "./UserHomePage";
 import Sidebar from "./components/Sidebar";
 import {
   BranchesPage,
@@ -25,43 +24,48 @@ import { CountryPage, AddEditCountryPage } from "./pages/countrys";
 import { CoursesPage, AddEditCoursesPage } from "./pages/courses";
 import { StatesPage, AddEditStatePage } from "./pages/states";
 import { UsersPage, AddEditUserPage } from "./pages/users";
+import Home from "./Client/pages/Home"; // Single import for Home
+import { adminRoutes, isAdminRoute } from "./components/AdminRoutes";
 
 function App() {
   const location = useLocation();
   const isAuthenticated = !!localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user")); // Get user data
 
-  // Show sidebar only for Admin users
+  // Show sidebar only for Admin users and only on Admin-specific routes
   const showSidebar =
-    isAuthenticated && user?.role === "Admin" && location.pathname !== "/login";
+    isAuthenticated &&
+    user?.role === "Admin" &&
+    isAdminRoute(location.pathname, adminRoutes);
 
   return (
-    <div className="flex h-screen bg-black text-gray-100 overflow-hidden">
+    <div className="min-h-screen bg-black text-gray-100 ">
       {/* Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-10" />
       </div>
 
-      {/* Sidebar (Only for Admin) */}
+      {/* Sidebar (Only for Admin on specific routes) */}
       {showSidebar && <Sidebar />}
 
       {/* Main Content */}
-      <div className={`flex-1 overflow-y-auto ${showSidebar ? "ml-0" : ""}`}>
+      <div
+        className={`relative z-10 ${showSidebar ? "ml-64 bg-gray-950" : ""}`}
+      >
         <Toaster />
         <Routes>
           {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
-
+          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/" element={<Home />} /> {/* Home is public */}
+          <Route path="/admin/dashboard" element={<Dashboard />} />
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
             {/* Admin Dashboard */}
             {user?.role === "Admin" && (
               <>
-                <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route path="/admin/overview" element={<OverviewPage />} />
-
                 {/* Admin-Only Routes */}
                 <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+                  <Route path="/admin" element={<OverviewPage />} />
                   <Route path="/admin/users" element={<UsersPage />} />
                   <Route
                     path="/admin/addedituser"
@@ -160,11 +164,9 @@ function App() {
               </>
             )}
 
-            {/* User Homepage (Different UI for Users) */}
-            {/* <Route path="/dashboard" element={<UserHomePage />} /> */}
+            {/* Shared Routes (Admin and User) */}
+            {/* <Route path="/admin/dashboard" element={<Dashboard />} /> */}
           </Route>
-
-          {/* Shared Routes (Admin and User) */}
         </Routes>
       </div>
     </div>

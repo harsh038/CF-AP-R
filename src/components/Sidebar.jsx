@@ -20,11 +20,16 @@ const SIDEBAR_ITEMS = [
     name: "Dashboard",
     icon: BarChart2,
     color: "#6366f1",
-    href: "/admin/overview",
+    href: "/admin",
   },
   { name: "Users", icon: Users, color: "#8B5CF6", href: "/admin/users" },
   { name: "Colleges", icon: School, color: "#EC4899", href: "/admin/colleges" },
-  { name: "Courses", icon: FolderOpenDot, color: "#10B981", href: "/admin/courses" },
+  {
+    name: "Courses",
+    icon: FolderOpenDot,
+    color: "#10B981",
+    href: "/admin/courses",
+  },
   { name: "Branches", icon: Layers, color: "#F59E0B", href: "/admin/branches" },
   { name: "Country", icon: Earth, color: "#2B8AF6", href: "/admin/country" },
   { name: "State", icon: GitGraphIcon, color: "#D447FF", href: "/admin/state" },
@@ -35,7 +40,12 @@ const SIDEBAR_ITEMS = [
     color: "#3B82F6",
     href: "/admin/collegecourse",
   },
-  { name: "Profile", icon: User2Icon, color: "#6EE7B7", href: "/admin/dashboard" },
+  {
+    name: "Profile",
+    icon: User2Icon,
+    color: "#6EE7B7",
+    href: "/admin/dashboard",
+  },
 ];
 
 const Sidebar = () => {
@@ -43,7 +53,7 @@ const Sidebar = () => {
 
   return (
     <motion.div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
+      className={`fixed z-10 h-screen transition-all duration-300 ease-in-out flex-shrink-0 ${
         isSidebarOpen ? "w-64" : "w-20"
       }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
@@ -87,4 +97,5 @@ const Sidebar = () => {
     </motion.div>
   );
 };
+
 export default Sidebar;
