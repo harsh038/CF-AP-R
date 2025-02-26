@@ -30,6 +30,7 @@ export const adminRoutes = [
   "/admin/addeditcollegecourse",
   "/admin/addeditcollegecourse/:id",
   "/admin/collegecoursedetails/:id",
+  "/admin/dashboard",
 ];
 
 /**

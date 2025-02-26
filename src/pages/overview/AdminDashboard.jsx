@@ -8,7 +8,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   if (!user) {
@@ -16,7 +16,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="p-6 relative">
+    <div className="p-6 relative w-full h-dvh ">
       {" "}
       {/* Add relative positioning */}
       <h2 className="text-2xl font-bold mb-4">Welcome, {user.firstName}!</h2>

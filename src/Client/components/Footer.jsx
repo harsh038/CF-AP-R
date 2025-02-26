@@ -89,7 +89,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="p-1"></div>
+      <div className="p-1 bg-black"></div>
     </div>
   );
 };
