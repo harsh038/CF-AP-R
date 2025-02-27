@@ -37,6 +37,16 @@ const AddEditUserPage = () => {
     }
   }, [id]);
 
+  const checkEmailExists = async (email) => {
+    try {
+      const response = await fetch("http://localhost:5050/api/User");
+      const users = await response.json();
+      return users.some((user) => user.email === email); // Returns true if email exists, false otherwise
+    } catch (error) {
+      console.error("Error checking email:", error);
+      return false;
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -63,64 +73,67 @@ const AddEditUserPage = () => {
     try {
       await ValidationSchema.validate(formData, { abortEarly: false });
       setErrors({});
-      //abortEarly:true---->return from validation on the first error rather than after all validations complete
-    } catch (error) {
-      // console.log(error.inner);
-      // error.inner is an array of errors
-      const newErrors = {};
 
+      // Check if email already exists
+      const emailExists = await checkEmailExists(formData.email);
+      if (emailExists) {
+        setErrors({ ...errors, email: "Email already exists." });
+        return;
+      }
+
+      if (id) {
+        fetch(`http://localhost:5050/api/User/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            toast.success("User updated successfully.", {
+              className:
+                " bg-green-950 text-white border  border border-green-400  rounded-xl ",
+            });
+            navigate("/admin/users");
+          })
+          .catch((error) => {
+            toast.error("Error updating user.", {
+              className:
+                " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+            });
+            console.error("Error updating user:", error);
+          });
+      } else {
+        fetch("http://localhost:5050/api/User", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            toast.success("User added successfully.", {
+              className:
+                " bg-green-950 text-white border  border border-green-400  rounded-xl ",
+            });
+            navigate("/admin/users");
+          })
+          .catch((error) => {
+            toast.error("Error adding user.", {
+              className:
+                " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+            });
+            console.error("Error adding user:", error);
+          });
+      }
+    } catch (error) {
+      const newErrors = {};
       error.inner.forEach((err) => {
         newErrors[err.path] = err.message;
       });
       setErrors(newErrors);
-      return;
-    }
-    if (id) {
-      fetch(`http://localhost:5050/api/User/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          toast.success("User updated successfully.", {
-            className:
-              " bg-green-950 text-white border  border border-green-400  rounded-xl ",
-          });
-          navigate("/admin/users");
-        })
-        .catch((error) => {
-          toast.error("Error updating user.", {
-            className:
-              " bg-red-950 text-white border  border border-red-400  rounded-xl ",
-          });
-          console.error("Error updating user:", error);
-        });
-    } else {
-      fetch("http://localhost:5050/api/User", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          toast.success("User added successfully.", {
-            className:
-              " bg-green-950 text-white border  border border-green-400  rounded-xl ",
-          });
-          navigate("/admin/users");
-        })
-        .catch((error) => {
-          toast.error("Error adding user.", {
-            className:
-              " bg-red-950 text-white border  border border-red-400  rounded-xl ",
-          });
-          console.error("Error adding user:", error);
-        });
     }
   };
 

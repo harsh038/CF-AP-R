@@ -26,6 +26,7 @@ import { StatesPage, AddEditStatePage } from "./pages/states";
 import { UsersPage, AddEditUserPage } from "./pages/users";
 import Home from "./Client/pages/Home"; // Single import for Home
 import { adminRoutes, isAdminRoute } from "./components/AdminRoutes";
+import Register from "./Forms/Register";
 
 function App() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} /> {/* Home is public */}
           <Route path="/admin/dashboard" element={<Dashboard />} />
           {/* Protected Routes */}

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import vectorBlack from "../../assets/vectorBlack.svg";
 import Login from "../../Forms/Login";
+import Register from "../../Forms/Register";
 import ProfileDropdown from "../../Client/components/ProfileDropdown";
 
 const Header = () => {
-  // ✅ Load user from localStorage initially to prevent UI flash
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(storedUser);
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedUser);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
@@ -17,18 +18,14 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 🔹 UseEffect for updates (not initial state)
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    console.log("User Data from LocalStorage:", storedUser);
-
     if (storedUser?.name) {
       setUser(storedUser);
       setIsLoggedIn(true);
     }
   }, []);
 
-  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
@@ -73,10 +70,13 @@ const Header = () => {
               <ProfileDropdown user={user} onLogout={handleLogout} />
             ) : (
               <button
-                onClick={() => setShowLoginPopup(true)}
+                onClick={() => {
+                  setShowLoginPopup(true);
+                  setShowRegisterPopup(false);
+                }}
                 className="bg-gray-800 px-4 py-2 rounded-3xl text-amber-50"
               >
-                Sign in
+                Sign up
               </button>
             )}
           </div>
@@ -101,6 +101,52 @@ const Header = () => {
                 setShowLoginPopup(false);
               }}
             />
+            {/* Switch to Register */}
+            <p className="mt-3 text-center text-gray-300">
+              Don't have an account?{" "}
+              <button
+                className="text-blue-400 underline"
+                onClick={() => {
+                  setShowLoginPopup(false);
+                  setShowRegisterPopup(true);
+                }}
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Register Popup Modal */}
+      {showRegisterPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
+          <div className="relative bg-goray p-6 rounded-lg shadow-lg w-96">
+            <button
+              onClick={() => setShowRegisterPopup(false)}
+              className="absolute top-3 right-3 text-white hover:text-gray-700"
+            >
+              ✖
+            </button>
+            <Register
+              onSuccess={() => {
+                setShowRegisterPopup(false); // Close register popup
+                setShowLoginPopup(true); // Open login popup
+              }}
+            />
+            {/* Switch to Login */}
+            <p className="mt-3 text-center text-gray-300">
+              Already have an account?{" "}
+              <button
+                className="text-blue-400 underline"
+                onClick={() => {
+                  setShowRegisterPopup(false);
+                  setShowLoginPopup(true);
+                }}
+              >
+                Sign in
+              </button>
+            </p>
           </div>
         </div>
       )}
