@@ -33,7 +33,6 @@ function App() {
   const isAuthenticated = !!localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user")); // Get user data
 
-  // Show sidebar only for Admin users and only on Admin-specific routes
   const showSidebar =
     isAuthenticated &&
     user?.role === "Admin" &&
@@ -41,7 +40,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-gray-100 ">
-      {/* Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-10" />
       </div>
