@@ -9,8 +9,20 @@ function BranchesTable() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5050/api/Branch")
-      .then((res) => res.json())
+    const token = localStorage.getItem("token"); // or sessionStorage if you used that
+
+    fetch("http://localhost:5050/api/Branch", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, 
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Unauthorized or error fetching Branches");
+        }
+        return res.json();
+      })
       .then((data) => setBranches(data))
       .catch((error) => console.error("Error fetching Branches:", error));
   }, []);

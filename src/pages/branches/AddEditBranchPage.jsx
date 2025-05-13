@@ -18,9 +18,22 @@ const AddEditBranchPage = () => {
     about: "",
   });
 
-  const fetchData = async (url) => {
+  const fetchData = async (url, options = {}) => {
     try {
-      const response = await fetch(url);
+      const token = localStorage.getItem("token");
+      const defaultHeaders = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          ...defaultHeaders,
+          ...(options.headers || {}),
+        },
+      });
+
       return await response.json();
     } catch (error) {
       toast.error(`Error fetching data from ${url}`);
@@ -81,33 +94,30 @@ const AddEditBranchPage = () => {
       : `http://localhost:5050/api/Branch`;
     const method = id ? "PUT" : "POST";
 
-    fetch(url, {
+    fetchData(url, {
       method,
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
       .then((data) => {
         if (data.duplication) {
-          toast.error("Branch is already associatred with course ", {
+          toast.error("Branch is already associated with course", {
             className:
-              " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+              " bg-red-950 text-white border border-red-400 rounded-xl ",
           });
         } else {
           toast.success(
             id ? "Branch updated successfully." : "Branch added successfully.",
             {
               className:
-                " bg-green-950 text-white border  border border-green-400  rounded-xl ",
+                " bg-green-950 text-white border border-green-400 rounded-xl ",
             }
           );
+          navigate("/admin/branches");
         }
-        navigate("/admin/branches");
       })
       .catch((error) => {
         toast.error(error.message || "Error adding Branch.", {
-          className:
-            " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+          className: " bg-red-950 text-white border border-red-400 rounded-xl ",
         });
         console.error("Error adding Branch:", error);
       });
@@ -124,15 +134,13 @@ const AddEditBranchPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <form className="flex flex-col space-y-4 " onSubmit={handleSubmit}>
+            <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
               <label className="flex flex-col gap-2">
                 Branch Name:
                 <input
                   type="text"
-                  className="
-                    bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400
-                    "
-                  placeholder="Enter state name"
+                  className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  placeholder="Enter branch name"
                   name="branchName"
                   value={formData.branchName}
                   onChange={handleInputChange}
@@ -165,13 +173,11 @@ const AddEditBranchPage = () => {
                 )}
               </label>
               <label className="flex flex-col gap-2">
-                About :
+                About:
                 <input
                   type="text"
-                  className="
-                    bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400
-                    "
-                  placeholder="Enter About"
+                  className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  placeholder="Enter about"
                   name="about"
                   value={formData.about}
                   onChange={handleInputChange}
@@ -181,13 +187,11 @@ const AddEditBranchPage = () => {
                 )}
               </label>
               <label className="flex flex-col gap-2">
-                Content :
+                Content:
                 <input
                   type="text"
-                  className="
-                    bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400
-                    "
-                  placeholder="Enter Content"
+                  className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  placeholder="Enter content"
                   name="content"
                   value={formData.content}
                   onChange={handleInputChange}

@@ -12,7 +12,11 @@ const BranchDetailsPage = () => {
   const [branch, setBranch] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:5050/api/Branch/${id}`)
+    fetch(`http://localhost:5050/api/Branch/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setBranch(data))
       .catch((error) => console.error("Error fetching Branch:", error));
@@ -20,7 +24,12 @@ const BranchDetailsPage = () => {
 
   const deleteBranches = (id) => {
     DeleteSweetAlert("You won't be able to revert the Branches!", () => {
-      fetch(`http://localhost:5050/api/Branch/${id}`, { method: "DELETE" })
+      fetch(`http://localhost:5050/api/Branch/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
         .then((res) => {
           if (res.ok) {
             return res.json();
