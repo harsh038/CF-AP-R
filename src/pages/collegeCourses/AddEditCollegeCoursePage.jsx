@@ -38,7 +38,6 @@ const AddEditCollegeCoursePage = () => {
       fetch(`http://localhost:5050/api/CollegeCourse/${id}`)
         .then((res) => res.json())
         .then((data) => {
-
           setFormData({
             collegeID: data.collegeID,
             collegeName: data.collegeModel.name,
@@ -70,12 +69,17 @@ const AddEditCollegeCoursePage = () => {
   }, []);
 
   function LoadBranchDD(courseID) {
+    const token = localStorage.getItem("token"); // Adjust if token is stored elsewhere
+
     if (courseID > 0) {
-      fetchData(
-        `http://localhost:5050/api/Branch/branchDropDown/${courseID}`
-      ).then((data) => {
-        setBranchDD(data);
-      });
+      fetch(`http://localhost:5050/api/Branch/branchDropDown/${courseID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then(setBranchDD)
+        .catch(() => setBranchDD([]));
     } else {
       setBranchDD([]);
     }
@@ -135,13 +139,10 @@ const AddEditCollegeCoursePage = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.duplication) {
-          toast.error(
-            "Branch is already exist in that course of college",
-            {
-              className:
-                " bg-red-950 text-white border  border border-red-400  rounded-xl ",
-            }
-          );
+          toast.error("Branch is already exist in that course of college", {
+            className:
+              " bg-red-950 text-white border  border border-red-400  rounded-xl ",
+          });
         } else {
           toast.success(
             id
