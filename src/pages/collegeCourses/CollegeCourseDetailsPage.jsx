@@ -10,13 +10,8 @@ const CollegeCourseDetailsPage = () => {
   const { id } = useParams(); // Get college ID from route params
   const [collegeCourses, setCollegeCourses] = useState([]); // List of college courses
   const [collegeName, setCollegeName] = useState(""); // Dynamic college name
-  const [filters, setFilters] = useState({
-    criteria: "",
-    seatAvailability: "",
-    feeRange: "",
-  });
 
-  // Fetch and filter college courses dynamically
+  // Fetch college courses
   const fetchCollegeCourses = async () => {
     try {
       const response = await fetch(
@@ -37,37 +32,6 @@ const CollegeCourseDetailsPage = () => {
   useEffect(() => {
     fetchCollegeCourses();
   }, [id]);
-
-  // Filter college courses based on user input
-  const filteredCollegeCourses = collegeCourses.filter((course) => {
-    return (
-      (filters.criteria === "" ||
-        course.admissionCriteria === filters.criteria) &&
-      (filters.seatAvailability === "" ||
-        (filters.seatAvailability === "<100" && course.seatAvailable < 100) ||
-        (filters.seatAvailability === "100-200" &&
-          course.seatAvailable >= 100 &&
-          course.seatAvailable <= 200) ||
-        (filters.seatAvailability === "201-500" &&
-          course.seatAvailable > 200 &&
-          course.seatAvailable <= 500) ||
-        (filters.seatAvailability === ">500" && course.seatAvailable > 500)) &&
-      (filters.feeRange === "" ||
-        (filters.feeRange === "<50k" && course.fee < 50000) ||
-        (filters.feeRange === "50k-1L" &&
-          course.fee >= 50000 &&
-          course.fee <= 100000) ||
-        (filters.feeRange === "1L-2L" &&
-          course.fee > 100000 &&
-          course.fee <= 200000) ||
-        (filters.feeRange === ">2L" && course.fee > 200000))
-    );
-  });
-
-  // Handle changes in filters
-  const handleFilterChange = (filterType, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [filterType]: value }));
-  };
 
   // Delete a course using its ID
   const handleDelete = async (courseId) => {
@@ -116,49 +80,9 @@ const CollegeCourseDetailsPage = () => {
               {collegeName}
             </h1>
 
-            {/* Horizontal Filter Section */}
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <select
-                className="bg-gray-700 text-white px-4 py-2 rounded"
-                onChange={(e) => handleFilterChange("criteria", e.target.value)}
-                value={filters.criteria}
-              >
-                <option value="">Select Admission Criteria</option>
-                <option value="Merit">Merit</option>
-                <option value="Entrance Exam">Entrance Exam</option>
-                <option value="Direct Admission">Direct Admission</option>
-              </select>
-
-              <select
-                className="bg-gray-700 text-white px-4 py-2 rounded"
-                onChange={(e) =>
-                  handleFilterChange("seatAvailability", e.target.value)
-                }
-                value={filters.seatAvailability}
-              >
-                <option value="">Select Seat Availability</option>
-                <option value="<100">Less than 100</option>
-                <option value="100-200">100 - 200</option>
-                <option value="201-500">201 - 500</option>
-                <option value=">500">More than 500</option>
-              </select>
-
-              <select
-                className="bg-gray-700 text-white px-4 py-2 rounded"
-                onChange={(e) => handleFilterChange("feeRange", e.target.value)}
-                value={filters.feeRange}
-              >
-                <option value="">Select Fee Range</option>
-                <option value="<50k">Less than 50k</option>
-                <option value="50k-1L">50k - 1L</option>
-                <option value="1L-2L">1L - 2L</option>
-                <option value=">2L">More than 2L</option>
-              </select>
-            </div>
-
-            {/* Render Filtered Courses */}
+            {/* Render College Courses */}
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-              {filteredCollegeCourses.map((course) => (
+              {collegeCourses.map((course) => (
                 <motion.div
                   key={course.collegeCourseID}
                   className="bg-gray-800 p-4 rounded-xl shadow-md border border-gray-700"
