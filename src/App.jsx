@@ -25,6 +25,7 @@ import { CoursesPage, AddEditCoursesPage } from "./pages/courses";
 import { StatesPage, AddEditStatePage } from "./pages/states";
 import { UsersPage, AddEditUserPage } from "./pages/users";
 import Home from "./Client/pages/Home"; // Single import for Home
+import FilterPage from "./Client/pages/FilterPage"; // Add this import
 import { adminRoutes, isAdminRoute } from "./components/AdminRoutes";
 import Register from "./Forms/Register";
 
@@ -57,6 +58,8 @@ function App() {
           {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} /> {/* Home is public */}
+          <Route path="/filter" element={<FilterPage />} />{" "}
+          {/* Add this route */}
           <Route path="/admin/dashboard" element={<Dashboard />} />
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>

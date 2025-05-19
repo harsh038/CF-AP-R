@@ -26,13 +26,17 @@ const AddEditCollegePage = () => {
     description: "",
   });
 
-  // Reusable fetch function
   const fetchData = async (url) => {
     try {
       const response = await fetch(url);
-      return await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
     } catch (error) {
       toast.error(`Error fetching data from ${url}`);
+      console.error(`Fetch error from ${url}:`, error);
       throw error;
     }
   };
@@ -64,19 +68,17 @@ const AddEditCollegePage = () => {
       fetchData(`http://localhost:5050/api/College/${id}`).then(
         (collegeData) => {
           setFormData({
-            cityID: collegeData.cityID,
-            name: collegeData.name,
-            type: collegeData.type,
-            rating: collegeData.rating,
-            website: collegeData.website,
-            description: collegeData.description,
-            establishmentYear: collegeData.establishmentYear,
-            address: collegeData.address,
-            collegeID: collegeData.collegeID,
-            countryID: collegeData.countryID,
-            stateID: collegeData.stateID,
+            id: collegeData.id || id, // Add this line to store id
+            countryID: collegeData.countryID || "",
+            stateID: collegeData.stateID || "",
+            cityID: collegeData.cityID || "",
+            name: collegeData.name || "",
+            type: collegeData.type || "Private",
+            establishmentYear: collegeData.establishmentYear || "",
+            address: collegeData.address || "",
+            website: collegeData.website || "",
+            description: collegeData.description || "",
           });
-
           LoadStateDD(collegeData.countryID);
           if (collegeData.stateID) {
             LoadCityDD(collegeData.stateID);
@@ -86,7 +88,6 @@ const AddEditCollegePage = () => {
     }
   }, [id]);
 
-  // Load city dropdown based on state selection
   function LoadCityDD(stateID) {
     if (stateID > 0) {
       fetchData(`http://localhost:5050/api/City/CityDropDown/${stateID}`).then(
@@ -99,16 +100,24 @@ const AddEditCollegePage = () => {
     }
   }
 
-  // Handle form input changes
   const handleInputChange = (e) => {
-    if (e.target.name === "countryID") {
-      LoadStateDD(e.target.value);
-    }
-    if (e.target.name === "stateID") {
-      LoadCityDD(e.target.value);
+    const { name, value } = e.target;
+
+    if (name === "countryID") {
+      LoadStateDD(value);
+      setFormData({ ...formData, countryID: value, stateID: "", cityID: "" });
+      setStateDD([]);
+      setAllCities([]);
+      return;
     }
 
-    const { name, value } = e.target;
+    if (name === "stateID") {
+      LoadCityDD(value);
+      setFormData({ ...formData, stateID: value, cityID: "" });
+      setAllCities([]);
+      return;
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -130,51 +139,46 @@ const AddEditCollegePage = () => {
       .max(new Date().getFullYear(), `Year cannot be in the future`)
       .required("Establishment year is required"),
 
-    website: Yup.string()
-      .url("Invalid URL format")
-      .required("Website is required"),
+    website: Yup.string().required("Website is required"),
 
-    description: Yup.string()
-      .required("Description is required")
-      .max(1000, "Description must be less than 1000 characters"),
+    address: Yup.string().required("Address is required"),
+
+    description: Yup.string().required("Description is required"),
   });
 
-  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await validationSchema.validate(formData, { abortEarly: false });
-      setErrors({});
-    } catch (error) {
-      const newErrors = {};
-      error.inner.forEach((err) => {
-        newErrors[err.path] = err.message;
-      });
-      setErrors(newErrors);
-      return;
+
+    if (
+      formData.website &&
+      !formData.website.startsWith("http://") &&
+      !formData.website.startsWith("https://")
+    ) {
+      formData.website = "https://" + formData.website;
     }
 
-    const url = id
-      ? `http://localhost:5050/api/College/${id}`
-      : `http://localhost:5050/api/College`;
-    const method = id ? "PUT" : "POST";
+    try {
+      const url = formData.id
+        ? `http://localhost:5050/api/College/${formData.id}`
+        : "http://localhost:5050/api/College";
 
-    fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        toast.success(
-          id ? "College updated successfully." : "College added successfully."
-        );
-        navigate("/admin/colleges");
-      })
-      .catch((error) => {
-        toast.error(error.message || "Error adding college.");
-        console.error("Error adding college:", error);
+      const method = formData.id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to save college");
+      }
+
+      navigate("/admin/colleges");
+    } catch (error) {
+      console.error("Error adding/updating college:", error);
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -188,7 +192,6 @@ const AddEditCollegePage = () => {
           transition={{ delay: 0.2 }}
         >
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
-            {/* College Fields First */}
             <label className="flex flex-col gap-2">
               <span className="text-white">College Name:</span>
               <input
@@ -215,6 +218,9 @@ const AddEditCollegePage = () => {
                 <option value="Private">Private</option>
                 <option value="Public">Public</option>
               </select>
+              {errors.type && (
+                <p className="text-red-600 text-sm">{errors.type}</p>
+              )}
             </label>
 
             <label className="flex flex-col gap-2">
@@ -248,42 +254,44 @@ const AddEditCollegePage = () => {
                 <p className="text-red-600 text-sm">{errors.website}</p>
               )}
             </label>
+
             <label className="flex flex-col gap-2">
               <span className="text-white">Address :</span>
               <textarea
-                type="text"
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
-                placeholder="Enter Address "
-                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                placeholder="Enter Address"
+                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 resize-none"
+                rows={3}
               />
               {errors.address && (
                 <p className="text-red-600 text-sm">{errors.address}</p>
               )}
             </label>
+
             <label className="flex flex-col gap-2">
               <span className="text-white">Description:</span>
-              <input
+              <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
                 placeholder="Enter description"
-                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 resize-none"
+                rows={4}
               />
               {errors.description && (
                 <p className="text-red-600 text-sm">{errors.description}</p>
               )}
             </label>
 
-            {/* Country, State, City Dropdowns */}
             <label className="flex flex-col gap-2">
               <span className="text-white">Country:</span>
               <select
                 name="countryID"
                 value={formData.countryID}
                 onChange={handleInputChange}
-                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="bg-gray-700 text-white rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 <option value="">Select Country</option>
                 {countryDD.map((country) => (
@@ -303,8 +311,8 @@ const AddEditCollegePage = () => {
                 name="stateID"
                 value={formData.stateID}
                 onChange={handleInputChange}
-                disabled={!formData.countryID}
-                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="bg-gray-700 text-white rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                disabled={!stateDD.length}
               >
                 <option value="">Select State</option>
                 {stateDD.map((state) => (
@@ -324,8 +332,8 @@ const AddEditCollegePage = () => {
                 name="cityID"
                 value={formData.cityID}
                 onChange={handleInputChange}
-                disabled={!formData.stateID}
-                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="bg-gray-700 text-white rounded-lg pl-5 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                disabled={!allCities.length}
               >
                 <option value="">Select City</option>
                 {allCities.map((city) => (
@@ -341,7 +349,7 @@ const AddEditCollegePage = () => {
 
             <button
               type="submit"
-              className="bg-green-500 text-white py-2 px-5 rounded-lg items-center"
+              className="self-center bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-lg"
             >
               {id ? "Update College" : "Add College"}
             </button>

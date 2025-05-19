@@ -7,11 +7,10 @@ import Header from "../../components/Header";
 import DeleteSweetAlert from "../../components/DeleteSweetAlert";
 
 const CollegeCourseDetailsPage = () => {
-  const { id } = useParams(); // Get college ID from route params
-  const [collegeCourses, setCollegeCourses] = useState([]); // List of college courses
-  const [collegeName, setCollegeName] = useState(""); // Dynamic college name
+  const { id } = useParams();
+  const [collegeCourses, setCollegeCourses] = useState([]);
+  const [collegeName, setCollegeName] = useState("");
 
-  // Fetch college courses
   const fetchCollegeCourses = async () => {
     try {
       const response = await fetch(
