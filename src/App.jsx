@@ -24,12 +24,9 @@ import { CountryPage, AddEditCountryPage } from "./pages/countrys";
 import { CoursesPage, AddEditCoursesPage } from "./pages/courses";
 import { StatesPage, AddEditStatePage } from "./pages/states";
 import { UsersPage, AddEditUserPage } from "./pages/users";
-import Home from "./Client/pages/Home"; // Single import for Home
-import FilterPage from "./Client/pages/FilterPage"; // Add this import
-<<<<<<< HEAD
-import CollegeDetails from "./Client/pages/CollegeDetails"; // Add this import
-=======
->>>>>>> 2e44b035b918e343606ad8ff089ebc42a7160534
+import Home from "./Client/pages/Home";
+import FilterPage from "./Client/pages/FilterPage";
+import CollegeDetails from "./Client/pages/CollegeDetails";
 import { adminRoutes, isAdminRoute } from "./components/AdminRoutes";
 import Register from "./Forms/Register";
 
@@ -64,11 +61,8 @@ function App() {
           <Route path="/" element={<Home />} /> {/* Home is public */}
           <Route path="/filter" element={<FilterPage />} />{" "}
           {/* Add this route */}
-<<<<<<< HEAD
           <Route path="/college/:id" element={<CollegeDetails />} />{" "}
           {/* Add this route */}
-=======
->>>>>>> 2e44b035b918e343606ad8ff089ebc42a7160534
           <Route path="/admin/dashboard" element={<Dashboard />} />
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
