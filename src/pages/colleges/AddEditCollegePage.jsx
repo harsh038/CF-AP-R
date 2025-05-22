@@ -134,9 +134,7 @@ const AddEditCollegePage = () => {
       .url("Invalid URL format")
       .required("Website is required"),
 
-    description: Yup.string()
-      .required("Description is required")
-      .max(1000, "Description must be less than 1000 characters"),
+    description: Yup.string().required("Description is required"),
   });
 
   // Form submit handler
