@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import vectorBlack from "../../assets/vectorBlack.svg";
 import Login from "../../Forms/Login";
 import Register from "../../Forms/Register";
 import ProfileDropdown from "../../Client/components/ProfileDropdown";
 
 const Header = () => {
+  const navigate = useNavigate();
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(storedUser);
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedUser);
@@ -40,8 +42,11 @@ const Header = () => {
         }`}
       >
         <div className="container mx-auto flex items-center justify-between py-3 px-16 text-goray">
-          {/* Logo */}
-          <div className="flex justify-start items-center">
+          {/* Logo and Title */}
+          <div
+            className="flex justify-start items-center cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => navigate("/")}
+          >
             <img className="h-6 w-10" src={vectorBlack} alt="Logo" />
             <p className="text-lg font-medium">College Finder</p>
           </div>
