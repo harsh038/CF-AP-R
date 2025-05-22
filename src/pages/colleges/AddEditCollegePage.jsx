@@ -141,11 +141,6 @@ const AddEditCollegePage = () => {
 
     website: Yup.string().required("Website is required"),
 
-<<<<<<< HEAD
-=======
-    address: Yup.string().required("Address is required"),
-
->>>>>>> 2e44b035b918e343606ad8ff089ebc42a7160534
     description: Yup.string().required("Description is required"),
   });
 
