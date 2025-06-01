@@ -68,7 +68,7 @@ const Header = () => {
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate("/about-us")}>
+                <button onClick={() => navigate("/aboutus")}>
                   <p>About Us</p>
                 </button>
               </li>
