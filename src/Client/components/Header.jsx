@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import vectorBlack from "../../assets/vectorBlack.svg";
 import Login from "../../Forms/Login";
@@ -42,7 +42,6 @@ const Header = () => {
         }`}
       >
         <div className="container mx-auto flex items-center justify-between py-3 px-16 text-goray">
-          {/* Logo and Title */}
           <div
             className="flex justify-start items-center cursor-pointer hover:opacity-80 transition-opacity"
             onClick={() => navigate("/")}
@@ -51,7 +50,6 @@ const Header = () => {
             <p className="text-lg font-medium">College Finder</p>
           </div>
 
-          {/* Navigation */}
           <nav>
             <ul className="flex space-x-10">
               <li>
@@ -69,7 +67,6 @@ const Header = () => {
             </ul>
           </nav>
 
-          {/* Profile Section */}
           <div className="flex gap-3">
             {isLoggedIn ? (
               <ProfileDropdown user={user} onLogout={handleLogout} />
@@ -88,7 +85,6 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Login Popup Modal */}
       {showLoginPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
           <div className="relative bg-goray p-6 rounded-lg shadow-lg w-96">
@@ -106,7 +102,6 @@ const Header = () => {
                 setShowLoginPopup(false);
               }}
             />
-            {/* Switch to Register */}
             <p className="mt-3 text-center text-gray-300">
               Don't have an account?{" "}
               <button
@@ -123,7 +118,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* Register Popup Modal */}
       {showRegisterPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
           <div className="relative bg-goray p-6 rounded-lg shadow-lg w-96">
@@ -135,11 +129,10 @@ const Header = () => {
             </button>
             <Register
               onSuccess={() => {
-                setShowRegisterPopup(false); // Close register popup
-                setShowLoginPopup(true); // Open login popup
+                setShowRegisterPopup(false);
+                setShowLoginPopup(true);
               }}
             />
-            {/* Switch to Login */}
             <p className="mt-3 text-center text-gray-300">
               Already have an account?{" "}
               <button
