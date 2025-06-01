@@ -30,6 +30,8 @@ import CollegeDetails from "./Client/pages/CollegeDetails";
 import { adminRoutes, isAdminRoute } from "./components/AdminRoutes";
 import Register from "./Forms/Register";
 import CollegeList from "./Client/pages/CollegeList";
+import CourseList from "./Client/pages/CourseList";
+import BranchList from "./Client/pages/BranchList";
 
 function App() {
   const location = useLocation();
@@ -58,6 +60,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/filter" element={<FilterPage />} />{" "}
           <Route path="/colleges" element={<CollegeList />} />{" "}
+          <Route path="/courses" element={<CourseList />} />{" "}
+          <Route path="/branches" element={<BranchList />} />{" "}
           <Route path="/college/:id" element={<CollegeDetails />} />{" "}
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route element={<ProtectedRoute />}>
