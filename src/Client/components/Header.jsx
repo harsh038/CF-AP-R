@@ -53,13 +53,24 @@ const Header = () => {
           <nav>
             <ul className="flex space-x-10">
               <li>
-                <a href="#enterprise">Explore</a>
+                <button onClick={() => navigate("/colleges")}>
+                  <p>Colleges</p>
+                </button>
               </li>
               <li>
-                <a href="#pricing">About</a>
+                <button onClick={() => navigate("/courses")}>
+                  <p>Courses</p>
+                </button>
               </li>
               <li>
-                <a href="#faq">Contact</a>
+                <button onClick={() => navigate("/branches")}>
+                  <p>Branches</p>
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigate("/about-us")}>
+                  <p>About Us</p>
+                </button>
               </li>
             </ul>
           </nav>

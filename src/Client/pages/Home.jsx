@@ -26,7 +26,7 @@ const Home = () => {
           </h1>
           <div className="flex justify-center gap-5 my-18 items-center">
             <button
-              onClick={() => navigate("/filter")}
+              onClick={() => navigate("/colleges")}
               className="flex items-center bg-goray rounded-2xl shadow-2xl px-3 py-2 text-white hover:bg-gray-700"
             >
               View Colleges
