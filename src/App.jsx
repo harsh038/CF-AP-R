@@ -34,6 +34,7 @@ import CourseList from "./Client/pages/CourseList";
 import BranchList from "./Client/pages/BranchList";
 import AboutUs from "./Client/pages/AboutUs";
 import CollegeDisplay from "./Client/pages/CollegeDisplay";
+import BranchDisplay from "./Client/pages/BranchDisplay";
 
 function App() {
   const location = useLocation();
@@ -67,6 +68,7 @@ function App() {
           <Route path="/branches" element={<BranchList />} />{" "}
           <Route path="/collegecourse/:id" element={<CollegeDetails />} />{" "}
           <Route path="/collegedetails/:id" element={<CollegeDisplay />} />{" "}
+          <Route path="/branch/:id" element={<BranchDisplay />} />{" "}
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route element={<ProtectedRoute />}>
             {/* Admin Dashboard */}
