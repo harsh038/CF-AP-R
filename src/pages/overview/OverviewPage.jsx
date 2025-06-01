@@ -1,6 +1,6 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header";
-import vectorWhite from "/vectorWhite.svg";
+import vectorWhite from "../../assets/vectorWhite.svg";
 
 const OverviewPage = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });

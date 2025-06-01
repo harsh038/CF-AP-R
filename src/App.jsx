@@ -33,7 +33,7 @@ import Register from "./Forms/Register";
 function App() {
   const location = useLocation();
   const isAuthenticated = !!localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user")); // Get user data
+  const user = JSON.parse(localStorage.getItem("user")); // Getting user data
 
   const showSidebar =
     isAuthenticated &&
