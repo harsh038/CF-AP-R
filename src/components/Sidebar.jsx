@@ -6,7 +6,6 @@ import {
   GitGraphIcon,
   Layers,
   MapPin,
-  Menu,
   School,
   User2Icon,
   Users,
@@ -49,7 +48,6 @@ const SIDEBAR_ITEMS = [
 const Sidebar = () => {
   return (
     <div className="fixed z-10 h-screen w-64 bg-gray-800 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
-      {/* No toggle button anymore */}
       <nav className="mt-8 flex-grow overflow-y-auto">
         {SIDEBAR_ITEMS.map((item) => (
           <Link key={item.href} to={item.href}>

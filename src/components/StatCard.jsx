@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 const StatCard = ({ name, icon: Icon, value, color }) => {
   return (
     <div className="bg-gray-800 bg-opacity-50 backdrop-blur-md overflow-hidden shadow-lg rounded-xl border hover:bg-gray-700  border-gray-700 hover:border-gray-900">

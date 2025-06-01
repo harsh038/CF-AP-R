@@ -1,6 +1,5 @@
 import { match } from "path-to-regexp";
 
-// List of Admin-specific routes
 export const adminRoutes = [
   "/admin",
   "/admin/users",
@@ -34,10 +33,9 @@ export const adminRoutes = [
 ];
 
 /**
- * Check if the current route matches any of the admin routes.
- * @param {string} path - The current route path.
- * @param {string[]} routes - The list of admin routes.
- * @returns {boolean} - True if the route matches any admin route, false otherwise.
+ * @param {string} path 
+ * @param {string[]} routes 
+ * @returns {boolean} 
  */
 export const isAdminRoute = (path, routes) => {
   return routes.some((route) => {
