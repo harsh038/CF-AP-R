@@ -124,7 +124,7 @@ const CollegeResults = ({ colleges, loading }) => {
                 </a>
                 <button
                   onClick={() =>
-                    navigate(`/college/${college.collegeCourseID}`, {
+                    navigate(`/collegecourse/${college.collegeCourseID}`, {
                       state: college,
                     })
                   }
