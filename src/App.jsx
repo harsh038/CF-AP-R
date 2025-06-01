@@ -32,6 +32,8 @@ import Register from "./Forms/Register";
 import CollegeList from "./Client/pages/CollegeList";
 import CourseList from "./Client/pages/CourseList";
 import BranchList from "./Client/pages/BranchList";
+import AboutUs from "./Client/pages/AboutUs";
+import CollegeDisplay from "./Client/pages/CollegeDisplay";
 
 function App() {
   const location = useLocation();
@@ -58,11 +60,13 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
+          <Route path="/aboutus" element={<AboutUs />} />{" "}
           <Route path="/filter" element={<FilterPage />} />{" "}
           <Route path="/colleges" element={<CollegeList />} />{" "}
           <Route path="/courses" element={<CourseList />} />{" "}
           <Route path="/branches" element={<BranchList />} />{" "}
-          <Route path="/college/:id" element={<CollegeDetails />} />{" "}
+          <Route path="/collegecourse/:id" element={<CollegeDetails />} />{" "}
+          <Route path="/collegedetails/:id" element={<CollegeDisplay />} />{" "}
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route element={<ProtectedRoute />}>
             {/* Admin Dashboard */}
