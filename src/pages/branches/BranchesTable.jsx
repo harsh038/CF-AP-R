@@ -9,12 +9,11 @@ function BranchesTable() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // or sessionStorage if you used that
-
+    const token = localStorage.getItem("token");
     fetch("http://localhost:5050/api/Branch", {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
