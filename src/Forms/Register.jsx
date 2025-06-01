@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -59,7 +59,7 @@ const Register = ({ onSuccess }) => {
         .then((res) => res.json())
         .then(() => {
           toast.success("User registered successfully.");
-          onSuccess(); // Call the onSuccess callback
+          onSuccess();
         })
         .catch(() => {
           toast.error("Error registering user.");
@@ -81,7 +81,6 @@ const Register = ({ onSuccess }) => {
         onSubmit={handleSubmit}
         noValidate
       >
-        {/* Form fields */}
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">First Name:</label>
           <input
