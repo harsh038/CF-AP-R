@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CollegeFilter from "../components/CollegeFilter";
@@ -9,7 +9,6 @@ const FilterPage = () => {
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Default filter values
   const defaultFilter = {
     countryID: null,
     stateID: null,
@@ -22,7 +21,6 @@ const FilterPage = () => {
 
   const [filters, setFilters] = useState(defaultFilter);
 
-  // Fetch filtered colleges from API
   const fetchColleges = async (filterValues) => {
     setLoading(true);
     try {
@@ -31,14 +29,11 @@ const FilterPage = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
-
-      // Convert empty strings to null
       const processedFilters = Object.keys(filterValues).reduce((acc, key) => {
         acc[key] = filterValues[key] === "" ? null : filterValues[key];
         return acc;
       }, {});
 
-      // Fetch colleges
       const response = await fetch(
         "http://localhost:5050/api/FilterColleges/filter",
         {
@@ -52,7 +47,6 @@ const FilterPage = () => {
       console.log("API Response:", data);
 
       if (response.ok && data.status) {
-        // Get unique course and branch IDs
         const uniqueCourseIds = [
           ...new Set(data.data.map((college) => college.courseID)),
         ];
@@ -60,7 +54,6 @@ const FilterPage = () => {
           ...new Set(data.data.map((college) => college.branchID)),
         ];
 
-        // Fetch course details
         const coursesResponse = await fetch(
           "http://localhost:5050/api/Course",
           { headers }
@@ -73,7 +66,6 @@ const FilterPage = () => {
           });
         }
 
-        // Fetch branch details
         const branchesResponse = await fetch(
           "http://localhost:5050/api/Branch",
           { headers }
@@ -86,7 +78,6 @@ const FilterPage = () => {
           });
         }
 
-        // Map college data with course and branch names
         const collegesWithDetails = data.data.map((college) => ({
           ...college,
           courseName:
@@ -110,12 +101,10 @@ const FilterPage = () => {
     }
   };
 
-  // On initial load → show all results
   useEffect(() => {
     fetchColleges(defaultFilter);
   }, []);
 
-  // Called from CollegeFilter when filter is updated
   const handleFilterChange = (updatedFilters) => {
     setFilters(updatedFilters);
     fetchColleges(updatedFilters);
@@ -136,14 +125,11 @@ const FilterPage = () => {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Filter Section */}
             <div className="lg:w-1/4">
               <div className="sticky top-4">
                 <CollegeFilter onFilterChange={handleFilterChange} />
               </div>
             </div>
-
-            {/* Results Section */}
             <div className="lg:w-3/4">
               <CollegeResults colleges={colleges} loading={loading} />
             </div>

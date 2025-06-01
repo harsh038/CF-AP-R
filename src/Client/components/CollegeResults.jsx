@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CollegeResults = ({ colleges, loading }) => {
@@ -15,7 +15,6 @@ const CollegeResults = ({ colleges, loading }) => {
           Authorization: `Bearer ${token}`,
         };
 
-        // Fetch courses
         const coursesResponse = await fetch(
           "http://localhost:5050/api/Course",
           { headers }
@@ -29,7 +28,6 @@ const CollegeResults = ({ colleges, loading }) => {
           setCoursesMap(mapping);
         }
 
-        // Fetch branches
         const branchesResponse = await fetch(
           "http://localhost:5050/api/Branch",
           { headers }
@@ -91,11 +89,10 @@ const CollegeResults = ({ colleges, loading }) => {
                   {college.collegeName}
                 </h3>
                 <span
-                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    college.collegeType === "Private"
+                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${college.collegeType === "Private"
                       ? "bg-purple-100 text-purple-800"
                       : "bg-green-100 text-green-800"
-                  }`}
+                    }`}
                 >
                   {college.collegeType}
                 </span>
@@ -143,5 +140,4 @@ const CollegeResults = ({ colleges, loading }) => {
     </div>
   );
 };
-
 export default CollegeResults;

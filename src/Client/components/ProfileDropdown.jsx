@@ -1,5 +1,5 @@
 import { MoveUpRight } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProfileDropdown = ({ user, onLogout }) => {
@@ -8,13 +8,12 @@ const ProfileDropdown = ({ user, onLogout }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    onLogout(); // Update the Header state
+    onLogout();
     navigate("/");
   };
 
   return (
     <div className="relative">
-      {/* Profile Icon (Click to Toggle Dropdown) */}
       <div
         className="h-10 w-10 flex items-center justify-center bg-goray text-white font-bold rounded-full cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
@@ -22,7 +21,6 @@ const ProfileDropdown = ({ user, onLogout }) => {
         {user?.firstName?.charAt(0).toUpperCase()}
       </div>
 
-      {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-72 bg-goray shadow-lg rounded-md z-20">
           <ul className="px-4 pb-2">
@@ -31,7 +29,6 @@ const ProfileDropdown = ({ user, onLogout }) => {
             </li>
             <li className="px-4 py-2 text-white font-medium">{user.email}</li>
 
-            {/* Show "Admin Panel" button only if user is an admin */}
             {user.role.toLowerCase() === "admin" && (
               <li>
                 <button
@@ -46,7 +43,6 @@ const ProfileDropdown = ({ user, onLogout }) => {
               </li>
             )}
 
-            {/* Logout Button */}
             <li>
               <button
                 onClick={handleLogout}

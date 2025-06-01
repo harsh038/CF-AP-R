@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 const CollegeFilter = ({ onFilterChange }) => {
-  // Selected filter states
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -11,14 +10,12 @@ const CollegeFilter = ({ onFilterChange }) => {
   const [selectedCollegeType, setSelectedCollegeType] = useState("");
   const [feeRange, setFeeRange] = useState([null, null]);
 
-  // Data states
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [courses, setCourses] = useState([]);
   const [branches, setBranches] = useState([]);
 
-  // Local state for filters before applying
   const [pendingFilters, setPendingFilters] = useState({
     countryID: null,
     stateID: null,
@@ -30,7 +27,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     maxFee: null,
   });
 
-  // Fetch data helper
   const fetchData = async (url) => {
     try {
       const token = localStorage.getItem("token");
@@ -50,7 +46,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     }
   };
 
-  // Initial data load
   useEffect(() => {
     const loadInitialData = async () => {
       const [countriesData, coursesData] = await Promise.all([
@@ -63,7 +58,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     loadInitialData();
   }, []);
 
-  // Load states when country changes
   useEffect(() => {
     if (selectedCountry) {
       fetchData(`/State/StateDropDown/${selectedCountry}`).then(setStates);
@@ -73,7 +67,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     }
   }, [selectedCountry]);
 
-  // Load cities when state changes
   useEffect(() => {
     if (selectedState) {
       fetchData(`/City/CityDropDown/${selectedState}`).then(setCities);
@@ -83,7 +76,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     }
   }, [selectedState]);
 
-  // Load branches when course changes
   useEffect(() => {
     if (selectedCourse) {
       fetchData(`/Branch/BranchDropDown/${selectedCourse}`).then(setBranches);
@@ -93,7 +85,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     }
   }, [selectedCourse]);
 
-  // Update filters function - now updates pending filters instead of calling parent immediately
   const updateFilters = (changes) => {
     setPendingFilters((prev) => ({
       ...prev,
@@ -101,14 +92,12 @@ const CollegeFilter = ({ onFilterChange }) => {
     }));
   };
 
-  // Handle college type selection - update pending filters
   const handleCollegeTypeChange = (type) => {
     const newType = selectedCollegeType === type ? "" : type;
     setSelectedCollegeType(newType);
     updateFilters({ type: newType });
   };
 
-  // Handle fee range change - update pending filters
   const handleFeeRangeChange = (index, value) => {
     const newRange = [...feeRange];
     newRange[index] = value === "" ? null : Number(value);
@@ -116,7 +105,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     updateFilters({ minFee: newRange[0], maxFee: newRange[1] });
   };
 
-  // Clear all filters
   const handleClearFilters = () => {
     setSelectedCountry("");
     setSelectedState("");
@@ -141,7 +129,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     onFilterChange(clearedFilters); // Apply cleared filters immediately
   };
 
-  // Apply current filters
   const handleApplyFilters = () => {
     onFilterChange(pendingFilters);
   };
@@ -182,7 +169,6 @@ const CollegeFilter = ({ onFilterChange }) => {
     }
   };
 
-  // Update the class constants with better color contrast
   const selectClasses =
     "w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200";
   const inputClasses =
@@ -197,7 +183,6 @@ const CollegeFilter = ({ onFilterChange }) => {
         <h2 className="text-2xl font-semibold text-gray-800">Filters</h2>
       </div>
 
-      {/* College Type Filter */}
       <div className="mb-4 border-b pb-3">
         <div className="flex justify-between items-center mb-2">
           <h3 className="font-medium text-gray-800">College Type</h3>
@@ -232,7 +217,6 @@ const CollegeFilter = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* Location Filters */}
       <div className="mb-4 border-b pb-3">
         <div className="flex justify-between items-center mb-2">
           <h3 className="font-medium text-gray-800">Location</h3>
@@ -296,7 +280,6 @@ const CollegeFilter = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* Course and Branch Filters */}
       <div className="mb-4 border-b pb-3">
         <div className="flex justify-between items-center mb-2">
           <h3 className="font-medium text-gray-800">Course Details</h3>
@@ -355,7 +338,6 @@ const CollegeFilter = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* Fee Range Filter */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <h3 className="font-medium text-gray-800">Fee Range</h3>
@@ -383,7 +365,6 @@ const CollegeFilter = ({ onFilterChange }) => {
           />
         </div>
 
-        {/* Filter Action Buttons */}
         <div className="flex gap-2">
           <button
             onClick={handleClearFilters}
