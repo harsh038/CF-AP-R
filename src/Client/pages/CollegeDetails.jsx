@@ -8,36 +8,76 @@ import toast from "react-hot-toast";
 const CollegeDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const collegeId = location.state?.collegeId;
+  const collegeCourseID = location.state?.collegeCourseID;
+
+  const [collegeCourse, setCollegeCourse] = useState(null);
   const [college, setCollege] = useState(null);
+  const [branch, setBranch] = useState(null);
+  const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCollege = async () => {
-      if (!collegeId) {
+    const fetchDetails = async () => {
+      if (!collegeCourseID) {
         setLoading(false);
         return;
       }
-
+      const token = localStorage.getItem("token");
       try {
-        const response = await fetch(
-          `http://localhost:5050/api/College/${collegeId}`
+        const courseResponse = await fetch(
+          `http://localhost:5050/api/CollegeCourse/${collegeCourseID}`
         );
-        if (!response.ok) {
+        if (!courseResponse.ok) {
+          throw new Error("College course not found");
+        }
+        const courseData = await courseResponse.json();
+        setCollegeCourse(courseData);
+
+        const collegeID = courseData.collegeID;
+        const collegeResponse = await fetch(
+          `http://localhost:5050/api/College/${collegeID}`
+        );
+        if (!collegeResponse.ok) {
           throw new Error("College not found");
         }
-        const data = await response.json();
-        setCollege(data);
+        const collegeData = await collegeResponse.json();
+        setCollege(collegeData);
+
+        const branchID = courseData.branchID;
+        const branchResponse = await fetch(
+          `http://localhost:5050/api/Branch/${branchID}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (branchResponse.ok) {
+          const branchData = await branchResponse.json();
+          console.log("Fetched branch data:", branchData);
+          setBranch(branchData);
+        }
+
+        const courseID = courseData.courseID;
+        const courseDetailsResponse = await fetch(
+          `http://localhost:5050/api/Course/${courseID}`
+        );
+        if (courseDetailsResponse.ok) {
+          const courseDetails = await courseDetailsResponse.json();
+          setCourse(courseDetails);
+        }
       } catch (error) {
         toast.error("Failed to load college details");
-        console.error("Error fetching college:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCollege();
-  }, [collegeId]);
+    fetchDetails();
+  }, [collegeCourseID]);
 
   if (loading) {
     return (
@@ -53,7 +93,7 @@ const CollegeDetails = () => {
     );
   }
 
-  if (!college) {
+  if (!collegeCourse || !college) {
     return (
       <div>
         <Header />
@@ -80,66 +120,146 @@ const CollegeDetails = () => {
     <div>
       <Header />
       <div className="min-h-screen bg-soky pt-28 p-10">
-        <div className="max-w-4xl mx-auto">
-          <button
-            onClick={() => navigate("/filter")}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mb-6"
-          >
-            <MoveLeft className="h-4 w-4" />
-            Back to Search
-          </button>
-
-            <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="flex justify">
+              <button
+                onClick={() => navigate("/filter")}
+                className="flex items-center gap-2 px-4 py-2 text-blue-600 bg-blue-200 rounded-lg hover:bg-blue-600 hover:text-white transition-colors mb-6"
+              >
+                <MoveLeft className="h-4 w-4" />
+                Back to Search
+              </button>
+            </div>
             <div className="flex justify-between items-start mb-6">
               <h1 className="text-3xl font-bold text-gray-800">
                 {college.name}
               </h1>
-              <a
-                href={college.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
-              >
-                <Globe className="h-4 w-4" />
-                Visit Website
-              </a>
+              {college.website && (
+                <a
+                  href={college.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-blue-50 rounded-lg hover:bg-blue-800 transition-colors"
+                >
+                  <Globe className="h-4 w-4" />
+                  Visit Website
+                </a>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {branch?.branchName && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                    Branch
+                  </h3>
+                  <p className="text-gray-800 text-xl">{branch.branchName}</p>
+                </div>
+              )}
               <div>
                 <h3 className="text-sm font-semibold text-gray-500 mb-1">
                   Type
                 </h3>
-                <p className="text-gray-800">{college.type}</p>
+                <p className="text-gray-800 text-xl">{college.type || "N/A"}</p>
               </div>
+              {course?.name && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                    Course
+                  </h3>
+                  <p className="text-gray-800 text-xl">
+                    {course.name || "N/A"}
+                  </p>
+                </div>
+              )}
               <div>
                 <h3 className="text-sm font-semibold text-gray-500 mb-1">
                   Established
                 </h3>
-                <p className="text-gray-800">{college.establishmentYear}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                  Location
-                </h3>
-                <p className="text-gray-800">
-                  {college.cityModel?.name || "N/A"}
+                <p className="text-gray-800 text-xl">
+                  {college.establishmentYear || "N/A"}
                 </p>
               </div>
+              {course?.duration && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                    Course Duration
+                  </h3>
+                  <p className="text-gray-800 text-xl">
+                    {course.duration || "N/A"}
+                  </p>
+                </div>
+              )}
               <div>
                 <h3 className="text-sm font-semibold text-gray-500 mb-1">
                   Address
                 </h3>
-                <p className="text-gray-800">{college.address}</p>
+                <p className="text-gray-800 text-xl">
+                  {college.address || "N/A"}
+                </p>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                  Seats Available
+                </h3>
+                <p className="text-gray-800 text-xl">
+                  {collegeCourse.seatAvailable}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                  Location
+                </h3>
+                <p className="text-gray-800 text-xl">
+                  {college.cityModel?.name || "N/A"}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-gray-500 mb-1">
+                  Course Fee
+                </h3>
+                <p className="text-gray-800 text-xl">₹{collegeCourse.fee}</p>
               </div>
             </div>
+            <div>
+              <h3 className="text-xl font-semibold text-gray-500 mb-1">
+                Admission Criteria
+              </h3>
+              <p className="text-gray-800 mb-6">
+                {collegeCourse.admissionCriteria || "N/A"}
+              </p>
+            </div>
+            {branch?.about && (
+              <div className="mb-6">
+                <h3 className="text-xl font-semibold text-gray-500 mb-2">
+                  About Branch
+                </h3>
+                <p className="text-gray-800 whitespace-pre-line">
+                  {branch.about}
+                </p>
+              </div>
+            )}
+
+            {branch?.content && (
+              <div className="mb-6">
+                <h3 className="text-xl font-semibold text-gray-500 mb-2">
+                  Branch Content
+                </h3>
+                <p className="text-gray-800 whitespace-pre-line">
+                  {branch.content}
+                </p>
+              </div>
+            )}
 
             <div>
-              <h3 className="text-sm font-semibold text-gray-500 mb-2">
-                About
+              <h3 className="text-xl font-semibold text-gray-500 mb-2">
+                About College
               </h3>
               <p className="text-gray-800 whitespace-pre-line">
-                {college.description}
+                {college.description || "No description available."}
               </p>
             </div>
           </div>
