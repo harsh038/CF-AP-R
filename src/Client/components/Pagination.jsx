@@ -13,10 +13,11 @@ const Pagination = ({
       <button
         onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
         disabled={currentPage === 1}
-        className={`p-2 rounded-lg ${currentPage === 1
-          ? "text-gray-400 cursor-not-allowed"
-          : "text-gray-600 hover:bg-gray-100"
-          }`}
+        className={`p-2 rounded-lg ${
+          currentPage === 1
+            ? "text-gray-400 cursor-not-allowed"
+            : "text-gray-600 hover:text-white hover:bg-black"
+        }`}
         aria-label="Previous page"
       >
         <ChevronLeft className="h-5 w-5" />
@@ -27,7 +28,7 @@ const Pagination = ({
           <>
             <button
               onClick={() => onPageChange(1)}
-              className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-600"
+              className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-gray-400 text-gray-600"
             >
               1
             </button>
@@ -51,10 +52,11 @@ const Pagination = ({
             <button
               key={pageNum}
               onClick={() => onPageChange(pageNum)}
-              className={`h-8 w-8 flex items-center justify-center rounded-lg ${currentPage === pageNum
-                ? "bg-blue-600 text-white"
-                : "text-gray-600 hover:bg-gray-100"
-                }`}
+              className={`h-8 w-8 flex items-center justify-center rounded-lg ${
+                currentPage === pageNum
+                  ? "bg-black text-white"
+                  : "text-gray-600 hover:text-black hover:bg-gray-400"
+              }`}
             >
               {pageNum}
             </button>
@@ -64,11 +66,11 @@ const Pagination = ({
         {currentPage < totalPages - 1 && (
           <>
             {currentPage < totalPages - 2 && (
-              <span className="text-gray-400">...</span>
+              <span className="text-gray-600">...</span>
             )}
             <button
               onClick={() => onPageChange(totalPages)}
-              className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-600"
+              className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-gray-400 text-gray-600 hover:text-black"
             >
               {totalPages}
             </button>
@@ -79,10 +81,11 @@ const Pagination = ({
       <button
         onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
         disabled={currentPage === totalPages}
-        className={`p-2 rounded-lg ${currentPage === totalPages
-          ? "text-gray-400 cursor-not-allowed"
-          : "text-gray-600 hover:bg-gray-100"
-          }`}
+        className={`p-2 rounded-lg ${
+          currentPage === totalPages
+            ? "text-gray-400 cursor-not-allowed"
+            : "text-gray-600 hover:text-white hover:bg-gray-900"
+        }`}
         aria-label="Next page"
       >
         <ChevronRight className="h-5 w-5" />
