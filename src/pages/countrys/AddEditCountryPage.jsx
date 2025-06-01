@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -45,8 +45,6 @@ const AddEditCountryPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  //   true means the field passes validation (no error).
-  // false means the field fails validation (error is shown).
   const ValidationSchema = Yup.object({
     name: Yup.string()
       .required("Country name is required")

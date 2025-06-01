@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
@@ -69,8 +69,7 @@ const AddEditCollegeCoursePage = () => {
   }, []);
 
   function LoadBranchDD(courseID) {
-    const token = localStorage.getItem("token"); // Adjust if token is stored elsewhere
-
+    const token = localStorage.getItem("token");
     if (courseID > 0) {
       fetch(`http://localhost:5050/api/Branch/branchDropDown/${courseID}`, {
         headers: {
@@ -99,7 +98,6 @@ const AddEditCollegeCoursePage = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  // Validation Schema for form Data
   const validationSchema = Yup.object({
     collegeID: Yup.string().required("College ID is required"),
     courseID: Yup.string().required("Course ID is required"),
@@ -130,7 +128,6 @@ const AddEditCollegeCoursePage = () => {
       : `http://localhost:5050/api/CollegeCourse`;
     const method = id ? "PUT" : "POST";
 
-    // Send the request to add/update syllabus
     fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },

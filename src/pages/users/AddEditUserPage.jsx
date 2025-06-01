@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
@@ -74,7 +74,6 @@ const AddEditUserPage = () => {
       await ValidationSchema.validate(formData, { abortEarly: false });
       setErrors({});
 
-      // Check if email already exists
       const emailExists = await checkEmailExists(formData.email);
       if (emailExists) {
         setErrors({ ...errors, email: "Email already exists." });
@@ -142,7 +141,6 @@ const AddEditUserPage = () => {
       <div className="flex-1 overflow-auto relative z-10">
         {id ? <Header title="Edit User" /> : <Header title="Add User" />}
         <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
-          {/* STATS */}
           <motion.div
             className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
             initial={{ opacity: 0, y: 20 }}
@@ -162,7 +160,7 @@ const AddEditUserPage = () => {
                   value={formData.firstname}
                   onChange={handleInputChange}
                 />
-                {errors.firstname && ( //if errors.firstname is true then show the error message
+                {errors.firstname && (
                   <span className="text-red-600 text-sm">
                     {errors.firstname}
                   </span>
@@ -239,7 +237,6 @@ const AddEditUserPage = () => {
                   <span className="text-red-600 text-sm">{errors.role}</span>
                 )}
               </label>
-              {/* add submit button */}
               <button
                 className="bg-green-500 text-white py-2 px-5 rounded-lg items-center"
                 type="submit"

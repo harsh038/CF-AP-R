@@ -58,7 +58,6 @@ const CollegeDetailsPage = () => {
                   {college.name}
                 </h2>
 
-                {/* College Details Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-300">
                   <div className="space-y-2">
                     <p className="font-semibold">City:</p>
@@ -96,7 +95,6 @@ const CollegeDetailsPage = () => {
                   <p className="text-sm text-gray-400">{college.description}</p>
                 </div>
 
-                {/* Actions */}
                 <div className="flex justify-start gap-4 mt-6">
                   <Link to={`/admin/addeditcollege/${college.collegeID}`}>
                     <button className="flex items-center bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300">

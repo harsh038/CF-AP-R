@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { Login, Dashboard } from "./Forms";
+import { Dashboard } from "./Forms";
 import ProtectedRoute from "./context/ProtectedRoute";
 import OverviewPage from "./pages/overview/OverviewPage";
 import Sidebar from "./components/Sidebar";
@@ -46,25 +46,18 @@ function App() {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-10" />
       </div>
 
-      {/* Sidebar (Only for Admin on specific routes) */}
       {showSidebar && <Sidebar />}
 
-      {/* Main Content */}
       <div
         className={`relative z-10 ${showSidebar ? "ml-64 bg-gray-950" : ""}`}
       >
         <Toaster />
         <Routes>
-          {/* Public Routes */}
-          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Home />} /> {/* Home is public */}
+          <Route path="/" element={<Home />} />
           <Route path="/filter" element={<FilterPage />} />{" "}
-          {/* Add this route */}
           <Route path="/college/:id" element={<CollegeDetails />} />{" "}
-          {/* Add this route */}
           <Route path="/admin/dashboard" element={<Dashboard />} />
-          {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
             {/* Admin Dashboard */}
             {user?.role === "Admin" && (
@@ -169,9 +162,6 @@ function App() {
                 </Route>
               </>
             )}
-
-            {/* Shared Routes (Admin and User) */}
-            {/* <Route path="/admin/dashboard" element={<Dashboard />} /> */}
           </Route>
         </Routes>
       </div>

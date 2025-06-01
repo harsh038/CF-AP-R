@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
@@ -15,8 +15,7 @@ const AddEditStatePage = () => {
     countryID: "",
     name: "",
   });
- 
-  // Reusable fetch function to reduce repetition
+
   const fetchData = async (url) => {
     try {
       const response = await fetch(url);
@@ -24,11 +23,10 @@ const AddEditStatePage = () => {
     } catch (error) {
       toast.error(`Error fetching data from ${url}`);
       console.error("Fetch Error:", error);
-      throw error; // Rethrow so you can handle it higher up if needed
+      throw error;
     }
   };
 
-  // Fetch state data for editing
   useEffect(() => {
     if (id) {
       fetchData(`http://localhost:5050/api/state/${id}`).then((data) => {
@@ -40,7 +38,6 @@ const AddEditStatePage = () => {
     }
   }, [id]);
 
-  // Fetch country dropdown data
   useEffect(() => {
     fetchData("http://localhost:5050/api/country/countryDropDown").then(
       (data) => {
@@ -49,13 +46,11 @@ const AddEditStatePage = () => {
     );
   }, []);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Validation schema for form data
   const ValidationSchema = Yup.object({
     countryID: Yup.string().required("Country is required"),
     name: Yup.string()
@@ -63,7 +58,6 @@ const AddEditStatePage = () => {
       .max(100, "State name must be less than 100 characters"),
   });
 
-  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -83,7 +77,6 @@ const AddEditStatePage = () => {
       : `http://localhost:5050/api/state`;
     const method = id ? "PUT" : "POST";
 
-    // Send the request to add/update state
     fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
@@ -92,9 +85,7 @@ const AddEditStatePage = () => {
       .then((res) => res.json())
       .then(() => {
         toast.success(
-          id
-            ? "State updated successfully."
-            : "State added successfully.",
+          id ? "State updated successfully." : "State added successfully.",
           {
             className:
               " bg-green-950 text-white border  border border-green-400  rounded-xl ",
@@ -114,11 +105,7 @@ const AddEditStatePage = () => {
   return (
     <>
       <div className="flex-1 overflow-auto relative z-10">
-        {id ? (
-          <Header title="Edit State" />
-        ) : (
-          <Header title="Add State" />
-        )}
+        {id ? <Header title="Edit State" /> : <Header title="Add State" />}
         <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
           <motion.div
             className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"

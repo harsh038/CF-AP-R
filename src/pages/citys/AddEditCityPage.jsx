@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
@@ -20,25 +20,21 @@ const AddEditCityPage = () => {
     name: "",
   });
 
-  // Reusable fetch function
   const fetchData = async (url) => {
     try {
       const response = await fetch(url);
       return await response.json();
     } catch (error) {
       toast.error(`Error fetching data from ${url}`);
-      // console.error("Fetch Error:", error);
       throw error;
     }
   };
 
-  // Fetch country dropdown data
   useEffect(() => {
     fetchData("http://localhost:5050/api/Country/CountryDropDown").then(
       (data) => setCountryDD(data)
     );
 
-    // Fetch all cities for validation
     fetchData("http://localhost:5050/api/City").then((data) =>
       setAllCities(data)
     );
@@ -52,33 +48,24 @@ const AddEditCityPage = () => {
         setStateDD(data);
       });
     } else {
-      setStateDD([]); // Clear state dropdown
+      setStateDD([]);
     }
   }
 
-  // Fetch city data for editing
   useEffect(() => {
     if (id) {
       fetchData(`http://localhost:5050/api/City/${id}`).then((cityData) => {
-
         setFormData({
           countryID: cityData.countryId,
           stateID: cityData.stateID,
           name: cityData.name,
         });
 
-        // Pre-fetch state dropdown
-        // fetchData(
-        //   `http://localhost:5050/api/State/StateDropDown/${cityData.stateModel.countryID}`
-        // ).then((states) => {
-        //   setStateDD(states);
-        // });
         LoadStateDD(cityData.countryId);
       });
     }
   }, [id]);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     if (e.target.name == "countryID") {
       LoadStateDD(e.target.value);
@@ -98,8 +85,7 @@ const AddEditCityPage = () => {
         "unique-city",
         "City already exists for the selected state and country",
         function (value) {
-          const { countryID, stateID } = this.parent; // Access related fields
-        
+          const { countryID, stateID } = this.parent;
 
           if (!countryID || !stateID || !value) {
             return true;
@@ -126,7 +112,6 @@ const AddEditCityPage = () => {
       ),
   });
 
-  // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -146,7 +131,6 @@ const AddEditCityPage = () => {
       : `http://localhost:5050/api/City`;
     const method = id ? "PUT" : "POST";
 
-    // Send request
     fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },

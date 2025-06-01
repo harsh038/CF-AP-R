@@ -20,7 +20,7 @@ const CollegeCourseDetailsPage = () => {
       setCollegeCourses(data);
 
       if (data.length > 0 && data[0]?.collegeModel?.name) {
-        setCollegeName(data[0].collegeModel.name); // Set college name
+        setCollegeName(data[0].collegeModel.name);
       }
     } catch (error) {
       console.error("Error fetching college courses:", error);
@@ -32,7 +32,6 @@ const CollegeCourseDetailsPage = () => {
     fetchCollegeCourses();
   }, [id]);
 
-  // Delete a course using its ID
   const handleDelete = async (courseId) => {
     DeleteSweetAlert(
       "You won't be able to revert the Course from College!",
@@ -79,7 +78,6 @@ const CollegeCourseDetailsPage = () => {
               {collegeName}
             </h1>
 
-            {/* Render College Courses */}
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
               {collegeCourses.map((course) => (
                 <motion.div

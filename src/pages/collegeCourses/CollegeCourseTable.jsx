@@ -52,7 +52,7 @@ function CollegeCourseTable() {
       handleSearch={handleSearch}
       addButtonLabel="Add College Course"
       addButtonLink="/admin/addeditcollegecourse"
-      tableName="College Course List" // Dynamic table name
+      tableName="College Course List" 
     >
       {filteredCollegeCourses.map((college, index) => (
         <motion.tr

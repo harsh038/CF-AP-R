@@ -96,7 +96,7 @@ const AddEditCollegePage = () => {
         }
       );
     } else {
-      setAllCities([]); // Clear city dropdown
+      setAllCities([]); 
     }
   }
 

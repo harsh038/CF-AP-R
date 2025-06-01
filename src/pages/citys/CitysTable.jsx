@@ -67,7 +67,7 @@ function CityTable({ updateCityStats }) {
       handleSearch={handleSearch}
       addButtonLabel="Add City"
       addButtonLink="/admin/addeditcity"
-      tableName="Cities List" // Dynamic table name
+      tableName="Cities List" 
     >
       {filteredCities.map((city, index) => (
         <motion.tr
