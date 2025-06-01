@@ -56,9 +56,6 @@ const Header = () => {
                 <a href="#enterprise">Explore</a>
               </li>
               <li>
-                <a href="#blog">Blog</a>
-              </li>
-              <li>
                 <a href="#pricing">About</a>
               </li>
               <li>
