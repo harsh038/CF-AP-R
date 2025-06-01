@@ -56,7 +56,6 @@ const CollegeDetails = () => {
 
         if (branchResponse.ok) {
           const branchData = await branchResponse.json();
-          console.log("Fetched branch data:", branchData);
           setBranch(branchData);
         }
 
