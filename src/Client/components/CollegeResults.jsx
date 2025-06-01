@@ -6,7 +6,6 @@ const CollegeResults = ({ colleges, loading }) => {
   const [coursesMap, setCoursesMap] = useState({});
   const [branchesMap, setBranchesMap] = useState({});
 
-  // Fetch course and branch details when colleges data changes
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -19,12 +18,9 @@ const CollegeResults = ({ colleges, loading }) => {
         // Fetch courses
         const coursesResponse = await fetch(
           "http://localhost:5050/api/Course",
-          {
-            headers,
-          }
+          { headers }
         );
         const coursesData = await coursesResponse.json();
-
         if (Array.isArray(coursesData)) {
           const mapping = {};
           coursesData.forEach((course) => {
@@ -36,12 +32,9 @@ const CollegeResults = ({ colleges, loading }) => {
         // Fetch branches
         const branchesResponse = await fetch(
           "http://localhost:5050/api/Branch",
-          {
-            headers,
-          }
+          { headers }
         );
         const branchesData = await branchesResponse.json();
-
         if (Array.isArray(branchesData)) {
           const mapping = {};
           branchesData.forEach((branch) => {
@@ -50,7 +43,7 @@ const CollegeResults = ({ colleges, loading }) => {
           setBranchesMap(mapping);
         }
       } catch (err) {
-        console.error("Error fetching course/branch details:", err);
+        console.error("Error fetching details:", err);
       }
     };
 
@@ -108,7 +101,6 @@ const CollegeResults = ({ colleges, loading }) => {
                 </span>
               </div>
 
-              {/* Course and Branch Information */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-xs text-gray-500 mb-1">COURSE</p>
@@ -125,12 +117,6 @@ const CollegeResults = ({ colleges, loading }) => {
               </div>
 
               <div className="mt-auto grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => navigate(`/college/${college.collegeID}`)}
-                  className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center"
-                >
-                  View More
-                </button>
                 <a
                   href={college.website}
                   target="_blank"
@@ -139,6 +125,16 @@ const CollegeResults = ({ colleges, loading }) => {
                 >
                   Website
                 </a>
+                <button
+                  onClick={() =>
+                    navigate(`/college/${college.collegeCourseID}`, {
+                      state: college,
+                    })
+                  }
+                  className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center"
+                >
+                  View More
+                </button>
               </div>
             </div>
           </div>

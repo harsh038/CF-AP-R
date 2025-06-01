@@ -46,7 +46,7 @@ const Home = () => {
             </button>
           </div>
           <div className="relative flex w-full justify-center items-center mt-2 overflow-x-hidden h-50 bg-soky text-goray">
-            <ShowDataCard number={"10,000 +"} text={"Colleges"} />
+            <ShowDataCard number={"10,000 +"} text={"Branches"} />
             <ShowDataCard number={"15,000 +"} text={"Courses"} />
             <ShowDataCard number={"5,000 +"} text={"Colleges"} />
           </div>

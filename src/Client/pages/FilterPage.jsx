@@ -3,12 +3,15 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CollegeFilter from "../components/CollegeFilter";
 import CollegeResults from "../components/CollegeResults";
+import Pagination from "../components/Pagination";
 import toast from "react-hot-toast";
 
 const FilterPage = () => {
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filteredColleges, setFilteredColleges] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; // Changed from 8 to 9 to ensure complete rows (3x3 grid)
 
   // Default filter values
   const defaultFilter = {
@@ -33,7 +36,18 @@ const FilterPage = () => {
       );
       setFilteredColleges(filtered);
     }
+    setCurrentPage(1); // Reset to first page when filters change
   }, [colleges, filters.type]);
+
+  // Get paginated data
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredColleges.slice(startIndex, endIndex);
+  };
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredColleges.length / itemsPerPage);
 
   // Fetch filtered colleges from API
   const fetchColleges = async (filterValues) => {
@@ -88,16 +102,38 @@ const FilterPage = () => {
   const handleFilterChange = (updatedFilters) => {
     setFilters(updatedFilters);
     fetchColleges(updatedFilters);
+    setCurrentPage(1); // Reset to first page when filters change
   };
 
   return (
     <div>
       <Header />
-      <div className="min-h-screen bg-soky pt-20 p-10 lg:p-10">
-        <div className="container mx-auto mt-8">
-          <div className="flex gap-6">
-            <CollegeFilter onFilterChange={handleFilterChange} />
-            <CollegeResults colleges={filteredColleges} loading={loading} />
+      <div className="min-h-screen bg-soky pt-20 p-6">
+        <div className="container mx-auto">
+          <div className="flex gap-6 items-start">
+            {/* Filter Section */}
+            <div className="w-1/4">
+              <CollegeFilter onFilterChange={handleFilterChange} />
+            </div>
+
+            {/* Results Section */}
+            <div className="w-3/4 flex flex-col gap-6">
+              <CollegeResults
+                colleges={getCurrentPageData()}
+                loading={loading}
+              />
+
+              {/* Pagination */}
+              {!loading && filteredColleges.length > 0 && (
+                <div className="flex justify-center">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

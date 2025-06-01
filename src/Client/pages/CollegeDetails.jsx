@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MoveLeft, Globe } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
 
 const CollegeDetails = () => {
-  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
+  const collegeId = location.state?.collegeId;
   const [college, setCollege] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCollege = async () => {
+      if (!collegeId) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await fetch(`http://localhost:5050/api/College/${id}`);
+        const response = await fetch(
+          `http://localhost:5050/api/College/${collegeId}`
+        );
         if (!response.ok) {
           throw new Error("College not found");
         }
@@ -29,7 +37,7 @@ const CollegeDetails = () => {
     };
 
     fetchCollege();
-  }, [id]);
+  }, [collegeId]);
 
   if (loading) {
     return (
