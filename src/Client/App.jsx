@@ -1,7 +1,5 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FilterPage from "./pages/FilterPage";
-import CollegeDetails from "./pages/CollegeDetails";
 import CollegeCourseDetails from "./pages/CollegeCourseDetails";
 
 const App = () => {
