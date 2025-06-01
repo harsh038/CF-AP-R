@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CollegeFilter from "../components/CollegeFilter";
@@ -11,9 +11,8 @@ const FilterPage = () => {
   const [loading, setLoading] = useState(false);
   const [filteredColleges, setFilteredColleges] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // Changed from 8 to 9 to ensure complete rows (3x3 grid)
+  const itemsPerPage = 9;
 
-  // Default filter values
   const defaultFilter = {
     countryID: null,
     stateID: null,
@@ -26,7 +25,6 @@ const FilterPage = () => {
 
   const [filters, setFilters] = useState(defaultFilter);
 
-  // Filter colleges based on type
   useEffect(() => {
     if (!filters.type) {
       setFilteredColleges(colleges);
@@ -36,20 +34,17 @@ const FilterPage = () => {
       );
       setFilteredColleges(filtered);
     }
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   }, [colleges, filters.type]);
 
-  // Get paginated data
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return filteredColleges.slice(startIndex, endIndex);
   };
 
-  // Calculate total pages
   const totalPages = Math.ceil(filteredColleges.length / itemsPerPage);
 
-  // Fetch filtered colleges from API
   const fetchColleges = async (filterValues) => {
     setLoading(true);
     try {
@@ -59,16 +54,13 @@ const FilterPage = () => {
         Authorization: `Bearer ${token}`,
       };
 
-      // Remove type from API request since we'll filter it on frontend
       const { type, ...apiFilters } = filterValues;
 
-      // Convert empty strings to null
       const processedFilters = Object.keys(apiFilters).reduce((acc, key) => {
         acc[key] = apiFilters[key] === "" ? null : apiFilters[key];
         return acc;
       }, {});
 
-      // Fetch colleges
       const response = await fetch(
         "http://localhost:5050/api/FilterColleges/filter",
         {
@@ -93,16 +85,14 @@ const FilterPage = () => {
     }
   };
 
-  // On initial load → show all results
   useEffect(() => {
     fetchColleges(defaultFilter);
   }, []);
 
-  // Called from CollegeFilter when filter is updated
   const handleFilterChange = (updatedFilters) => {
     setFilters(updatedFilters);
     fetchColleges(updatedFilters);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   };
 
   return (
@@ -111,19 +101,16 @@ const FilterPage = () => {
       <div className="min-h-screen bg-soky pt-20 p-6">
         <div className="container mx-auto">
           <div className="flex gap-6 items-start">
-            {/* Filter Section */}
             <div className="w-1/4">
               <CollegeFilter onFilterChange={handleFilterChange} />
             </div>
 
-            {/* Results Section */}
             <div className="w-3/4 flex flex-col gap-6">
               <CollegeResults
                 colleges={getCurrentPageData()}
                 loading={loading}
               />
 
-              {/* Pagination */}
               {!loading && filteredColleges.length > 0 && (
                 <div className="flex justify-center">
                   <Pagination

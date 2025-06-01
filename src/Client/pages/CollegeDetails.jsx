@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MoveLeft, Globe } from "lucide-react";
 import Header from "../components/Header";
@@ -81,7 +81,6 @@ const CollegeDetails = () => {
       <Header />
       <div className="min-h-screen bg-soky pt-28 p-10">
         <div className="max-w-4xl mx-auto">
-          {/* Back Button */}
           <button
             onClick={() => navigate("/filter")}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mb-6"
@@ -90,8 +89,7 @@ const CollegeDetails = () => {
             Back to Search
           </button>
 
-          {/* College Details Card */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="flex justify-between items-start mb-6">
               <h1 className="text-3xl font-bold text-gray-800">
                 {college.name}

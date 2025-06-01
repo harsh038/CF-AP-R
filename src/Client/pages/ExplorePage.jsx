@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Building2,
   GraduationCap,
   BookOpen,
-  ChevronLeft,
-  ChevronRight,
+
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -101,8 +100,8 @@ const ExplorePage = () => {
     (activeCategory === "colleges"
       ? colleges.length
       : activeCategory === "branches"
-      ? branches.length
-      : courses.length) / itemsPerPage
+        ? branches.length
+        : courses.length) / itemsPerPage
   );
 
   const renderCard = (item) => {
@@ -184,7 +183,6 @@ const ExplorePage = () => {
       <Header />
       <div className="min-h-screen bg-gray-50 pt-28 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Navigation */}
           <div className="flex overflow-x-auto pb-4 mb-8 hide-scrollbar">
             <div className="flex space-x-4">
               {categories.map((category) => {
@@ -198,10 +196,9 @@ const ExplorePage = () => {
                     }}
                     className={`
                       flex items-center gap-2 px-6 py-3 rounded-full whitespace-nowrap
-                      ${
-                        activeCategory === category.id
-                          ? "bg-blue-600 text-white"
-                          : "bg-white text-gray-600 hover:bg-gray-50"
+                      ${activeCategory === category.id
+                        ? "bg-blue-600 text-white"
+                        : "bg-white text-gray-600 hover:bg-gray-50"
                       }
                       transition-colors shadow-sm
                     `}
@@ -214,7 +211,6 @@ const ExplorePage = () => {
             </div>
           </div>
 
-          {/* Content Grid */}
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[...Array(8)].map((_, index) => (
@@ -236,7 +232,6 @@ const ExplorePage = () => {
                 {getCurrentData().map(renderCard)}
               </div>
 
-              {/* Pagination */}
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
