@@ -37,7 +37,7 @@ const CollegeList = () => {
   return (
     <div>
       <Header />
-      <div className="min-h-screen bg-gray-50 pt-28 p-6">
+      <div className="min-h-screen bg-soky pt-28 p-6">
         <h2 className="text-4xl font-semibold text-center text-gray-800 mb-10">
           Explore Colleges
         </h2>
